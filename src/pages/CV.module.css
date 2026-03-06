@@ -1,0 +1,64 @@
+.header {
+  padding-top: var(--space-8);
+  margin-bottom: var(--space-8);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  flex-wrap: wrap;
+}
+
+.viewerWrap {
+  width: 100%;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--bg-surface);
+  min-height: 600px;
+}
+
+.pdfObject {
+  width: 100%;
+  height: min(85vh, 900px);
+  display: block;
+}
+
+.fallback {
+  padding: var(--space-12);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.fallback p { color: var(--text-secondary); max-width: none; }
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-20);
+  gap: var(--space-4);
+  text-align: center;
+  color: var(--text-tertiary);
+}
+
+.placeholder p { max-width: 40ch; }
+
+.placeholderHint {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+}
+
+.placeholderHint code {
+  background: var(--bg-surface-alt);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.85em;
+}

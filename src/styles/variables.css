@@ -1,0 +1,161 @@
+/* ============================================================
+   Design Tokens — Light Mode Defaults
+   ============================================================ */
+:root {
+  /* -- Color: Blues (primary) -- */
+  --color-blue-900: #0c1f35;
+  --color-blue-800: #1a3a5c;
+  --color-blue-700: #1e4976;
+  --color-blue-600: #2563a0;
+  --color-blue-500: #3b7cc9;
+  --color-blue-400: #5c97d9;
+  --color-blue-300: #8cb8e8;
+  --color-blue-200: #bcd6f2;
+  --color-blue-100: #e0eef9;
+  --color-blue-50:  #f0f6fd;
+
+  /* -- Color: Neutrals (blue-gray) -- */
+  --color-gray-900: #111827;
+  --color-gray-800: #1f2d3d;
+  --color-gray-700: #2e3f52;
+  --color-gray-600: #46556a;
+  --color-gray-500: #637180;
+  --color-gray-400: #8899aa;
+  --color-gray-300: #b0becb;
+  --color-gray-200: #d1dbe4;
+  --color-gray-100: #eaf0f5;
+  --color-gray-50:  #f5f8fa;
+
+  /* -- Color: Warm off-whites -- */
+  --color-paper:    #faf8f4;
+  --color-paper-alt: #f4f1eb;
+  --color-ink:      #2c2416;
+
+  /* -- Semantic tokens: Light -- */
+  --bg-page:        var(--color-paper);
+  --bg-surface:     #ffffff;
+  --bg-surface-alt: var(--color-gray-50);
+  --bg-surface-2:   var(--color-blue-50);
+  --bg-nav:         rgba(250, 248, 244, 0.92);
+
+  --text-primary:   #1a1a1a;
+  --text-secondary: var(--color-gray-600);
+  --text-tertiary:  var(--color-gray-400);
+  --text-inverse:   var(--color-paper);
+  --text-link:      var(--color-blue-700);
+  --text-link-hover: var(--color-blue-500);
+
+  --border-subtle:  var(--color-gray-200);
+  --border-medium:  var(--color-gray-300);
+  --border-strong:  var(--color-gray-500);
+
+  --accent-primary: var(--color-blue-700);
+  --accent-light:   var(--color-blue-100);
+  --accent-bg:      var(--color-blue-50);
+
+  /* -- Typography -- */
+  --font-heading: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:    'IBM Plex Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  --text-xs:   0.75rem;   /* 12px */
+  --text-sm:   0.875rem;  /* 14px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg:   1.125rem;  /* 18px */
+  --text-xl:   1.25rem;   /* 20px */
+  --text-2xl:  1.5rem;    /* 24px */
+  --text-3xl:  1.875rem;  /* 30px */
+  --text-4xl:  2.25rem;   /* 36px */
+  --text-5xl:  3rem;      /* 48px */
+  --text-6xl:  3.75rem;   /* 60px */
+
+  --leading-tight:  1.25;
+  --leading-snug:   1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose:  2;
+
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide:  0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+
+  /* -- Spacing -- */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* -- Layout -- */
+  --content-width:  72ch;
+  --wide-width:     90rem;
+  --nav-height:     64px;
+
+  /* -- Borders -- */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg:  12px;
+  --radius-xl:  16px;
+  --radius-full: 9999px;
+
+  /* -- Shadows -- */
+  --shadow-sm:  0 1px 2px rgba(26, 58, 92, 0.06);
+  --shadow-md:  0 4px 12px rgba(26, 58, 92, 0.08);
+  --shadow-lg:  0 8px 32px rgba(26, 58, 92, 0.12);
+  --shadow-xl:  0 16px 48px rgba(26, 58, 92, 0.16);
+
+  /* -- Transitions -- */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow:   400ms ease;
+
+  /* -- Z-index scale -- */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-overlay: 100;
+  --z-modal:   200;
+  --z-nav:     300;
+  --z-envelope: 400;
+  --z-toast:   500;
+}
+
+/* ============================================================
+   Dark Mode Overrides
+   ============================================================ */
+[data-theme="dark"] {
+  --bg-page:        var(--color-blue-900);
+  --bg-surface:     #0f2035;
+  --bg-surface-alt: #132840;
+  --bg-surface-2:   #0d1c2e;
+  --bg-nav:         rgba(12, 31, 53, 0.92);
+
+  --text-primary:   #e8eef4;
+  --text-secondary: #9ab0c4;
+  --text-tertiary:  #5c7890;
+  --text-inverse:   var(--color-ink);
+  --text-link:      var(--color-blue-300);
+  --text-link-hover: var(--color-blue-200);
+
+  --border-subtle:  rgba(255, 255, 255, 0.08);
+  --border-medium:  rgba(255, 255, 255, 0.14);
+  --border-strong:  rgba(255, 255, 255, 0.28);
+
+  --accent-primary: var(--color-blue-400);
+  --accent-light:   rgba(59, 124, 201, 0.15);
+  --accent-bg:      rgba(59, 124, 201, 0.08);
+
+  --shadow-sm:  0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg:  0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-xl:  0 16px 48px rgba(0, 0, 0, 0.5);
+}

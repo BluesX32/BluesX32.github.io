@@ -1,0 +1,23 @@
+{
+  "name": "Your Name",
+  "nameShort": "YN",
+  "tagline": "MS→PhD student in biomedical informatics and clinical decision-making.",
+  "intro": "I'm interested in how clinical language, real-world data, and decision theory intersect — and what that means for building systems that are actually useful at the point of care. I'm exploring methods at the edges of NLP, causal inference, and clinical informatics.",
+  "now": [
+    "Preparing PhD applications in biomedical informatics",
+    "Finishing my MS thesis on clinical note summarization",
+    "Reading about causal inference and treatment effect heterogeneity",
+    "Thinking about what it means for a model to be clinically useful, not just accurate"
+  ],
+  "about": {
+    "bio": "I came to biomedical informatics from a background in [your prior field], drawn by a persistent question: why is so much clinical knowledge locked inside unstructured text, and what would it mean to make it computationally legible without losing its nuance? That question has led me to NLP, real-world evidence, and the messy boundary between measurement and meaning in medicine.",
+    "values": [
+      "Rigor that stays honest about its own limits",
+      "Tools that serve clinicians, not just benchmarks",
+      "Curiosity as a sustained practice, not a credential",
+      "Clarity over cleverness"
+    ],
+    "outside": "Outside of research, I think about [hobby / interest], read [genre], and try to keep a clear head through [activity]. I believe that taking care of yourself is part of taking your work seriously.",
+    "philosophy": "I want to build things that are genuinely useful — that reduce friction for people trying to do good work in difficult circumstances. I'm building toward research that is methodologically careful, clinically grounded, and honest about what we don't yet know."
+  }
+}

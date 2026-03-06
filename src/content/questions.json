@@ -1,0 +1,74 @@
+[
+  {
+    "id": "q1",
+    "question": "How do we define disease?",
+    "tags": ["Disease", "Philosophy", "Measurement"],
+    "note": "Is disease a biological fact, a social construct, or a deviation from a statistical norm? Does the answer change across conditions — is heart failure more 'real' than depression? The definition shapes what counts as a case, which in turn shapes every downstream inference."
+  },
+  {
+    "id": "q2",
+    "question": "What is true health?",
+    "tags": ["Health", "Philosophy", "Measurement"],
+    "note": "If disease is the absence of health, we haven't said much. Boorse's biostatistical theory, Nordenfelt's welfare theory, and the WHO definition each give different answers — with different implications for what systems should optimize."
+  },
+  {
+    "id": "q3",
+    "question": "When does severity become a construct rather than an outcome?",
+    "tags": ["Severity", "Measurement", "Disease"],
+    "note": "Severity scores like APACHE-II or SOFA are predictive instruments that have been reified into measures of disease state. At what point does the map become the territory? And what do we lose when we forget the difference?"
+  },
+  {
+    "id": "q4",
+    "question": "What makes a clinical decision good?",
+    "tags": ["Decision-making", "Ethics", "Causality"],
+    "note": "Is a good decision one that follows the evidence? One that produces a good outcome? One that reflects the patient's values? These can conflict. The right answer probably depends on who is asking and why — which is itself a kind of answer."
+  },
+  {
+    "id": "q5",
+    "question": "How should we evaluate usefulness, not just performance?",
+    "tags": ["Measurement", "Decision-making", "Ethics"],
+    "note": "AUROC and F1 are easy to compute and easy to compare, but they don't tell you whether a model would help anyone make a better decision. What would a framework for evaluating clinical usefulness look like — and is it even possible to specify in advance?"
+  },
+  {
+    "id": "q6",
+    "question": "What kind of evidence deserves trust in practice?",
+    "tags": ["Causality", "Ethics", "Decision-making"],
+    "note": "RCT evidence is credible but often narrow. RWE is broad but confounded. Expert consensus is accessible but fallible. In practice, clinicians synthesize all of these — and so should decision support systems. But what's the right weighting function, and can it be made explicit?"
+  },
+  {
+    "id": "q7",
+    "question": "Is a model fair if it performs equally across groups on average?",
+    "tags": ["Ethics", "Measurement", "Disease"],
+    "note": "Equal average performance can mask systematic differences in where errors occur. A model that is miscalibrated in a specific subgroup may cause harm precisely in the patients who already face the most barriers to accurate diagnosis and appropriate care."
+  },
+  {
+    "id": "q8",
+    "question": "When is uncertainty clinically legible?",
+    "tags": ["Decision-making", "Measurement", "Philosophy"],
+    "note": "Quantified uncertainty — confidence intervals, prediction intervals, calibration curves — is technically precise but may be meaningless to a clinician under time pressure. What forms of uncertainty communication actually change decisions for the better?"
+  },
+  {
+    "id": "q9",
+    "question": "What is the relationship between explanation and trust?",
+    "tags": ["Ethics", "Decision-making", "Philosophy"],
+    "note": "Explainability research assumes that explanations build appropriate trust. But explanations can also build inappropriate trust — making a model seem more interpretable than it is. Under what conditions does explanation help, and when does it mislead?"
+  },
+  {
+    "id": "q10",
+    "question": "Can a model be wrong and still be useful?",
+    "tags": ["Measurement", "Decision-making", "Causality"],
+    "note": "A map is always wrong — it omits information and distorts scale. But some maps are useful precisely because of what they leave out. The same may be true of clinical models. The question is whether we know what has been omitted and whether that matters for the task at hand."
+  },
+  {
+    "id": "q11",
+    "question": "How do we prevent the benchmark from becoming the goal?",
+    "tags": ["Measurement", "Ethics", "Decision-making"],
+    "note": "Goodhart's Law: when a measure becomes a target, it ceases to be a good measure. In clinical AI, optimizing for AUROC or ROUGE can produce models that score well and help no one. What institutional and methodological structures might resist this pressure?"
+  },
+  {
+    "id": "q12",
+    "question": "What do we owe to patients whose data trained the model?",
+    "tags": ["Ethics", "Disease", "Philosophy"],
+    "note": "Clinical AI systems are trained on patient data — data generated in moments of vulnerability, often without explicit consent for research purposes. What obligations does this create? Is benefit to future patients a sufficient justification, or is something else required?"
+  }
+]

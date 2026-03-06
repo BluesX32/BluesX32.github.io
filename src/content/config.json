@@ -1,0 +1,21 @@
+{
+  "site": {
+    "baseUrl": "https://BluesX32.github.io",
+    "basePath": "/"
+  },
+  "cv": {
+    "path": "/cv/cv.pdf",
+    "label": "Download CV"
+  },
+  "scheduling": {
+    "calendlyUrl": "",
+    "label": "Schedule a Meeting"
+  },
+  "social": {
+    "email": "your.email@example.com",
+    "github": "https://github.com/BluesX32",
+    "linkedin": "https://linkedin.com/in/yourprofile",
+    "scholar": "https://scholar.google.com/citations?user=YOURID",
+    "twitter": ""
+  }
+}

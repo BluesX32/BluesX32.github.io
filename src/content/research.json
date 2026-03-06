@@ -1,0 +1,42 @@
+[
+  {
+    "id": "clinical-nlp",
+    "title": "Clinical NLP & Documentation",
+    "description": "I'm interested in how clinical language encodes knowledge that structured data misses — diagnoses implied but not coded, reasoning embedded in free text, uncertainty expressed through hedging and qualification. I'm exploring methods that can surface this latent structure while respecting its clinical context.",
+    "methods": ["Information extraction", "Span classification", "Summarization", "LLM evaluation"],
+    "whyItMatters": "Clinical notes are the most complete record of a patient encounter, but they remain largely inaccessible to computational systems. Methods that bridge unstructured documentation and structured inference could change what's possible in care delivery and research.",
+    "icon": "nlp"
+  },
+  {
+    "id": "decision-support",
+    "title": "Clinical Decision Support",
+    "description": "I'm exploring the design and evaluation of decision support tools that are genuinely useful in practice — not just accurate on held-out test sets. This means thinking carefully about how clinicians interact with recommendations, what kinds of errors matter most, and when a tool should remain silent.",
+    "methods": ["Workflow integration", "Human-AI teaming", "Alert design", "Prospective evaluation"],
+    "whyItMatters": "Most clinical decision support research optimizes for metrics that don't map cleanly to clinical utility. I'm interested in the gap between model performance and real-world impact — and what it would take to close it.",
+    "icon": "decision"
+  },
+  {
+    "id": "real-world-evidence",
+    "title": "Real-World Evidence & Phenotyping",
+    "description": "I'm building toward expertise in EHR-based research — the messy, laborious, and underappreciated work of defining cohorts, validating phenotypes, and reasoning carefully about confounding. I'm interested in how choices made early in data preparation propagate into downstream conclusions.",
+    "methods": ["EHR phenotyping", "Cohort construction", "ICD/NLP hybrid methods", "Data quality assessment"],
+    "whyItMatters": "RWE offers the scale that randomized trials can't provide, but only if the underlying data infrastructure is sound. I want to understand what it takes to do this work rigorously — and where rigor breaks down under practical constraints.",
+    "icon": "data"
+  },
+  {
+    "id": "evaluation",
+    "title": "Evaluation, Tradeoffs & Clinical Validity",
+    "description": "I'm interested in how we should evaluate AI/ML systems in clinical contexts — what the right metrics are, how to reason about precision-recall tradeoffs when the costs of errors are asymmetric, and what 'external validity' actually means for a model intended for real-world deployment.",
+    "methods": ["Decision curve analysis", "Calibration", "Subgroup analysis", "Implementation science frameworks"],
+    "whyItMatters": "A model that performs well on average can still cause systematic harm to subgroups. Evaluation frameworks that ignore deployment context or cost asymmetry give false confidence. I'm exploring what more honest evaluation would look like.",
+    "icon": "eval"
+  },
+  {
+    "id": "causality",
+    "title": "Causal Inference in Clinical Data",
+    "description": "I'm exploring how causal inference methods — potential outcomes, DAGs, sensitivity analysis — can help us reason more carefully about observational clinical data. I'm interested in what assumptions are required, when they're plausible, and how to communicate uncertainty when they're not.",
+    "methods": ["Propensity scoring", "Instrumental variables", "Directed acyclic graphs", "Sensitivity analysis"],
+    "whyItMatters": "Clinical decisions are inherently causal, but most prediction models are correlational. Closing that gap requires both methodological care and honest engagement with the limits of observational data.",
+    "icon": "causal"
+  }
+]

@@ -1,0 +1,204 @@
+.demo {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+
+.demoHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-surface-alt);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  min-height: 240px;
+}
+
+/* Criteria panel */
+.criteriaPanel {
+  padding: var(--space-5);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.groupTitle {
+  display: block;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  background: var(--bg-surface-alt);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.chip:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.chipActive {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: #fff;
+}
+
+.chipCode {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+/* Result panel */
+.resultPanel {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.cohortSize {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+}
+
+.cohortN {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  font-weight: 300;
+  color: var(--accent-primary);
+  letter-spacing: var(--tracking-tight);
+  transition: all 250ms ease;
+}
+
+.cohortLabel {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.barWrap {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-surface-alt);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.bar {
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: var(--radius-full);
+  transition: width 350ms ease;
+  min-width: 2px;
+}
+
+.barPct {
+  position: absolute;
+  right: 0;
+  top: 12px;
+  font-size: 10px;
+  color: var(--text-tertiary);
+}
+
+.baseNote {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  max-width: none;
+  margin-top: var(--space-4);
+}
+
+/* Demographic split */
+.demSplit {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-3);
+}
+
+.demBar {
+  width: 100%;
+  height: 10px;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  display: flex;
+}
+
+.demSegment {
+  height: 100%;
+  transition: width 300ms ease;
+}
+
+.demLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.demLegendItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: var(--text-tertiary);
+}
+
+.demDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.syntheticNote {
+  font-size: 9px;
+  color: var(--text-tertiary);
+  font-style: italic;
+  max-width: none;
+}
+
+.emptyNote {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  max-width: none;
+}
+
+@media (max-width: 540px) {
+  .body {
+    grid-template-columns: 1fr;
+  }
+  .criteriaPanel { border-right: none; border-bottom: 1px solid var(--border-subtle); }
+}

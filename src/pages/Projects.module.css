@@ -1,0 +1,193 @@
+.header {
+  padding-top: var(--space-8);
+  margin-bottom: var(--space-12);
+}
+
+.projectList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+/* Project card */
+.projectCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition: box-shadow var(--transition-normal);
+}
+
+.projectCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* Card header */
+.cardHeader {
+  padding: var(--space-6) var(--space-6) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+}
+
+.cardMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.cardIndex {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 300;
+  color: var(--text-tertiary);
+  letter-spacing: var(--tracking-tight);
+  margin-right: var(--space-2);
+}
+
+.statusTag {
+  background: var(--color-blue-100);
+  color: var(--color-blue-700);
+}
+[data-theme="dark"] .statusTag {
+  background: rgba(59, 124, 201, 0.15);
+  color: var(--color-blue-300);
+}
+
+.cardTags {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.projectTitle {
+  font-family: var(--font-heading);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.projectSubtitle {
+  font-size: var(--text-sm);
+  color: var(--text-tertiary);
+  max-width: none;
+}
+
+/* Demo area */
+.demoArea {
+  padding: var(--space-4) var(--space-6);
+  background: var(--bg-surface-alt);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Detail section */
+.detailSection {}
+
+.detailToggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+  border-top: 1px solid var(--border-subtle);
+  text-align: left;
+}
+
+.detailToggle:hover {
+  background: var(--bg-surface-alt);
+  color: var(--text-primary);
+}
+
+.toggleChevron {
+  font-size: var(--text-base);
+  transition: transform var(--transition-fast);
+  color: var(--text-tertiary);
+}
+
+.detailBody {
+  padding: var(--space-6);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  animation: fadeIn 200ms ease;
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.detailBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.detailText {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-relaxed);
+  max-width: none;
+}
+
+/* Tools */
+.toolsSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.toolTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.toolTag {
+  padding: var(--space-1) var(--space-3);
+  background: var(--bg-page);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+}
+
+/* Pipeline */
+.pipelineSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.pipelineHint {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  font-style: italic;
+  max-width: none;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .cardHeader { padding: var(--space-5); }
+  .demoArea { padding: var(--space-4); }
+  .detailToggle { padding: var(--space-3) var(--space-5); }
+  .detailBody { padding: var(--space-5); gap: var(--space-6); }
+  .detailGrid { grid-template-columns: 1fr; gap: var(--space-4); }
+}

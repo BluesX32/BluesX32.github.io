@@ -1,0 +1,62 @@
+[
+  {
+    "id": "pub-2024-01",
+    "title": "Automated Summarization of Clinical Notes: A Comparative Evaluation",
+    "authors": ["Your Name", "Co-Author A", "Co-Author B", "Mentor Name"],
+    "venue": "AMIA Annual Symposium",
+    "year": 2024,
+    "type": "conference",
+    "abstract": "We evaluate three approaches to automatic summarization of clinical progress notes, comparing extractive, abstractive, and hybrid methods on a manually annotated corpus of ICU notes. Results suggest that abstractive methods outperform extractive baselines on ROUGE but underperform on clinician preference ratings.",
+    "links": {
+      "pdf": "",
+      "doi": "",
+      "arxiv": ""
+    },
+    "bibtex": "@inproceedings{yourname2024summarization,\n  title={Automated Summarization of Clinical Notes: A Comparative Evaluation},\n  author={Your Name and Co-Author A and Co-Author B and Mentor Name},\n  booktitle={AMIA Annual Symposium},\n  year={2024}\n}"
+  },
+  {
+    "id": "pub-2024-02",
+    "title": "Phenotyping Acute Kidney Injury in EHR Data: A Systematic Comparison of Rule-Based and ML Approaches",
+    "authors": ["Co-Author A", "Your Name", "Mentor Name"],
+    "venue": "Journal of the American Medical Informatics Association",
+    "year": 2024,
+    "type": "journal",
+    "abstract": "This study compares rule-based and machine learning phenotyping algorithms for acute kidney injury using administrative and clinical data from a large academic medical center. We evaluate algorithm performance across patient subgroups and identify sources of systematic disagreement.",
+    "links": {
+      "pdf": "",
+      "doi": "https://doi.org/10.1093/jamia/placeholder",
+      "arxiv": ""
+    },
+    "bibtex": "@article{coauthor2024aki,\n  title={Phenotyping Acute Kidney Injury in EHR Data},\n  author={Co-Author A and Your Name and Mentor Name},\n  journal={JAMIA},\n  year={2024},\n  publisher={Oxford University Press}\n}"
+  },
+  {
+    "id": "pub-2023-01",
+    "title": "Alert Fatigue in Clinical Decision Support: A Scoping Review",
+    "authors": ["Your Name", "Co-Author B"],
+    "venue": "Applied Clinical Informatics",
+    "year": 2023,
+    "type": "journal",
+    "abstract": "We conducted a scoping review of alert fatigue in CDS systems, synthesizing evidence on override rates, contextual factors, and mitigation strategies. We identify gaps in prospective evaluation and propose a framework for studying fatigue in deployment contexts.",
+    "links": {
+      "pdf": "",
+      "doi": "",
+      "arxiv": ""
+    },
+    "bibtex": "@article{yourname2023fatigue,\n  title={Alert Fatigue in Clinical Decision Support: A Scoping Review},\n  author={Your Name and Co-Author B},\n  journal={Applied Clinical Informatics},\n  year={2023}\n}"
+  },
+  {
+    "id": "pub-2023-02",
+    "title": "Poster: Threshold Selection Under Asymmetric Costs in Sepsis Prediction",
+    "authors": ["Your Name", "Mentor Name"],
+    "venue": "AMIA Annual Symposium (Poster)",
+    "year": 2023,
+    "type": "poster",
+    "abstract": "We examine how standard threshold selection methods perform when false negatives carry substantially higher clinical cost than false positives, using a sepsis prediction dataset. Results motivate cost-sensitive threshold selection as a default for clinical ML models.",
+    "links": {
+      "pdf": "",
+      "doi": "",
+      "arxiv": ""
+    },
+    "bibtex": "@misc{yourname2023threshold,\n  title={Threshold Selection Under Asymmetric Costs in Sepsis Prediction},\n  author={Your Name and Mentor Name},\n  howpublished={AMIA Annual Symposium Poster},\n  year={2023}\n}"
+  }
+]

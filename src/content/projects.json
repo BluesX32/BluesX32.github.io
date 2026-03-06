@@ -1,0 +1,156 @@
+[
+  {
+    "id": "note-summarization",
+    "title": "Clinical Note Summarization",
+    "subtitle": "Structured extraction from unstructured clinical text",
+    "status": "MS Thesis",
+    "tags": ["NLP", "Summarization", "Clinical Notes"],
+    "problem": "Clinical progress notes contain rich diagnostic reasoning, but their length and unstructured nature make them difficult to use computationally or for rapid clinical review. Existing summarization methods treat notes as generic text, ignoring clinical structure.",
+    "approach": "I developed a hybrid approach that combines span extraction with abstractive generation, guided by a problem-oriented clinical schema. The model was trained on synthetically annotated notes and evaluated against clinician-written summaries.",
+    "impact": "The system produces structured summaries in a Problems / Medications / Assessment / Plan format, with span-level provenance linking summary bullets back to source text. Clinician preference ratings favor the hybrid approach over extractive and fully abstractive baselines.",
+    "myRole": "End-to-end: problem formulation, annotation scheme design, model development, evaluation design, and manuscript writing.",
+    "tools": ["Python", "HuggingFace Transformers", "spaCy", "MIMIC-III (synthetic)", "BioASQ", "i2b2"],
+    "pipeline": [
+      {"id": "p1", "label": "Input Note", "description": "A raw clinical progress note — narrative, heterogeneous, often hundreds of tokens."},
+      {"id": "p2", "label": "Span Detection", "description": "A fine-tuned span classifier identifies clinically relevant segments: problems, medications, assessments."},
+      {"id": "p3", "label": "Schema Mapping", "description": "Detected spans are mapped to a structured clinical schema: Problems / Meds / Assessment / Plan."},
+      {"id": "p4", "label": "Abstractive Refinement", "description": "A seq2seq model refines each schema slot, improving fluency while preserving clinical accuracy."},
+      {"id": "p5", "label": "Structured Summary", "description": "Final output: a schema-aligned summary with provenance links back to source spans."}
+    ],
+    "demoNote": "Patient is a 67-year-old male with a history of type 2 diabetes mellitus, hypertension, and stage 3 chronic kidney disease presenting with three days of worsening dyspnea on exertion and bilateral lower extremity edema. He reports no chest pain, no orthopnea, and no paroxysmal nocturnal dyspnea. He denies fever, chills, or productive cough. He has been compliant with his medications including metformin 1000mg twice daily, lisinopril 10mg daily, amlodipine 5mg daily, and furosemide 40mg daily. His furosemide was recently increased from 20mg to 40mg by his PCP two weeks ago. On review of systems, he notes mild fatigue and decreased appetite over the past week. Vital signs are significant for blood pressure 158/94, heart rate 88, respiratory rate 18, oxygen saturation 94% on room air. On physical examination, he is in mild respiratory distress. Cardiovascular exam reveals an elevated JVP and an S3 gallop. Pulmonary exam reveals bibasilar crackles. Bilateral pitting edema is present to the mid-calf. BMP is notable for creatinine 2.1 (baseline 1.8), BUN 34, potassium 4.2. BNP is 980. Chest X-ray shows cardiomegaly with pulmonary vascular congestion consistent with volume overload. ECG shows normal sinus rhythm without acute ST changes. The clinical picture is most consistent with acute decompensated heart failure in the setting of underlying CKD and medication titration.",
+    "demoSummary": {
+      "problems": [
+        {"text": "Acute decompensated heart failure", "spans": ["acute decompensated heart failure"], "highlight": "hf"},
+        {"text": "Volume overload — bilateral LE edema, bibasilar crackles, elevated JVP", "spans": ["bilateral lower extremity edema", "bibasilar crackles", "elevated JVP"], "highlight": "volume"},
+        {"text": "CKD stage 3 with creatinine rise (2.1, baseline 1.8)", "spans": ["stage 3 chronic kidney disease", "creatinine 2.1 (baseline 1.8)"], "highlight": "ckd"},
+        {"text": "Hypertension — BP 158/94 on antihypertensives", "spans": ["hypertension", "blood pressure 158/94"], "highlight": "htn"}
+      ],
+      "medications": [
+        {"text": "Metformin 1000mg BID", "spans": ["metformin 1000mg twice daily"], "highlight": "med"},
+        {"text": "Lisinopril 10mg daily", "spans": ["lisinopril 10mg daily"], "highlight": "med"},
+        {"text": "Amlodipine 5mg daily", "spans": ["amlodipine 5mg daily"], "highlight": "med"},
+        {"text": "Furosemide 40mg daily (recently increased from 20mg)", "spans": ["furosemide 40mg daily", "increased from 20mg to 40mg"], "highlight": "med"}
+      ],
+      "assessment": [
+        {"text": "BNP 980, CXR with pulmonary vascular congestion, S3 gallop — clinical picture consistent with ADHF", "spans": ["BNP is 980", "pulmonary vascular congestion", "S3 gallop"], "highlight": "assess"},
+        {"text": "Creatinine elevation likely reflects cardiorenal syndrome vs. diuretic effect", "spans": ["creatinine 2.1 (baseline 1.8)"], "highlight": "ckd"}
+      ],
+      "plan": [
+        {"text": "IV diuresis; monitor renal function and electrolytes closely", "spans": [], "highlight": "plan"},
+        {"text": "Cardiology consult for further evaluation and management", "spans": [], "highlight": "plan"},
+        {"text": "Continue antihypertensives; reassess after diuresis", "spans": [], "highlight": "htn"}
+      ]
+    }
+  },
+  {
+    "id": "decision-pathway",
+    "title": "Clinical Decision Support",
+    "subtitle": "Decision pathway modeling and alert design",
+    "status": "Ongoing Research",
+    "tags": ["CDS", "Workflow", "Alert Design"],
+    "problem": "Clinical decision support tools often generate alerts that are ignored, overridden, or actively resented by clinicians. The problem is rarely algorithmic — it's contextual. I'm exploring how decision pathway modeling can improve the relevance and timing of clinical recommendations.",
+    "approach": "I'm building a framework for representing clinical decision pathways as directed graphs, where nodes encode clinical states and edges encode conditional actions. The framework supports tracing how recommendations propagate through a pathway and identifying intervention points.",
+    "impact": "This work is early-stage. The goal is a formal vocabulary for representing CDS logic that supports retrospective analysis of alert override patterns and prospective design of context-aware alerts.",
+    "myRole": "Concept development, literature review, preliminary framework design.",
+    "tools": ["Python", "NetworkX", "Clinical guideline documents", "FHIR CDS Hooks"],
+    "pipeline": [
+      {"id": "d1", "label": "Clinical State", "description": "The current patient context: diagnoses, vitals, active medications, recent labs."},
+      {"id": "d2", "label": "Rule Evaluation", "description": "Pathway logic evaluates the clinical state against defined criteria and thresholds."},
+      {"id": "d3", "label": "Recommendation", "description": "A candidate recommendation is generated — a suggested action, order, or referral."},
+      {"id": "d4", "label": "Context Filter", "description": "Context filters suppress recommendations that are inappropriate given the clinical setting."},
+      {"id": "d5", "label": "Alert Delivery", "description": "A targeted, context-aware alert is delivered at the point of care."}
+    ],
+    "decisionNodes": [
+      {
+        "id": "n1", "label": "Initial Presentation",
+        "x": 60, "y": 120,
+        "rationale": "Patient presents with new-onset chest pain. Initial triage determines hemodynamic stability and routes to appropriate workup.",
+        "features": ["Chief complaint", "Hemodynamic status", "Vital signs"],
+        "next": "Risk stratification and ECG interpretation"
+      },
+      {
+        "id": "n2", "label": "ECG Interpretation",
+        "x": 200, "y": 60,
+        "rationale": "ECG findings are evaluated for ST changes, conduction abnormalities, and LBBB patterns that may indicate acute MI.",
+        "features": ["ST segment elevation/depression", "Q waves", "LBBB"],
+        "next": "If STEMI: immediate cath lab activation. If non-diagnostic: troponin serial testing."
+      },
+      {
+        "id": "n3", "label": "Risk Stratification",
+        "x": 200, "y": 180,
+        "rationale": "HEART score or TIMI score applied to risk-stratify patients with non-diagnostic ECG.",
+        "features": ["History features", "ECG", "Age", "Risk factors", "Troponin"],
+        "next": "Low-risk: expedited discharge pathway. High-risk: admit for further evaluation."
+      },
+      {
+        "id": "n4", "label": "Admission Decision",
+        "x": 340, "y": 120,
+        "rationale": "Admission or discharge decision integrates clinical risk score, serial troponin results, and patient and clinician preferences.",
+        "features": ["HEART score ≥ 4", "Troponin trend", "Social factors"],
+        "next": "Admitted patients: cardiology consult, stress testing or angiography."
+      },
+      {
+        "id": "n5", "label": "Disposition",
+        "x": 480, "y": 120,
+        "rationale": "Final disposition: discharge with follow-up, observation, or inpatient admission based on integrated clinical judgment.",
+        "features": ["Risk tier", "Patient preferences", "Resource availability"],
+        "next": "Follow-up planning or inpatient pathway continues."
+      }
+    ]
+  },
+  {
+    "id": "cohort-builder",
+    "title": "EHR Phenotyping & Real-World Data",
+    "subtitle": "Cohort construction and phenotype validation",
+    "status": "Coursework + Research",
+    "tags": ["EHR", "Phenotyping", "RWE"],
+    "problem": "Defining a patient cohort from EHR data is deceptively difficult. ICD codes alone miss many true cases; NLP-based phenotyping improves sensitivity but requires labeled data. I'm exploring hybrid approaches that combine structured and unstructured data for more complete cohort identification.",
+    "approach": "I've built a cohort construction pipeline that integrates ICD code filtering, NLP-based mention extraction, and laboratory result criteria. The pipeline supports modular criterion addition and includes a validation layer for estimating phenotyping accuracy.",
+    "impact": "The pipeline has been applied to define cohorts for two ongoing projects. Key finding: NLP-based inclusion adds ~12% of cases missed by ICD codes alone, but also introduces ~5% false positives requiring downstream adjudication.",
+    "myRole": "Pipeline development, annotation protocol design, preliminary validation.",
+    "tools": ["Python", "pandas", "spaCy", "SQL", "OMOP CDM"],
+    "pipeline": [
+      {"id": "c1", "label": "Raw EHR Data", "description": "Source data from EHR including structured (ICD, labs, meds) and unstructured (notes) fields."},
+      {"id": "c2", "label": "ICD Filtering", "description": "Initial cohort filtered by relevant ICD-9/10 codes. Fast but incomplete — misses uncoded cases."},
+      {"id": "c3", "label": "NLP Expansion", "description": "NLP-based mention extraction identifies patients with diagnostic mentions in notes not captured by codes."},
+      {"id": "c4", "label": "Lab Criteria", "description": "Laboratory value criteria applied to confirm or refute phenotype where gold-standard values exist."},
+      {"id": "c5", "label": "Validated Cohort", "description": "Final cohort with estimated PPV/sensitivity from chart review adjudication."}
+    ],
+    "cohortCriteria": {
+      "icd": [
+        {"code": "I50.x", "label": "Heart Failure", "active": true},
+        {"code": "N18.3", "label": "CKD Stage 3", "active": false},
+        {"code": "E11.x", "label": "Type 2 DM", "active": true}
+      ],
+      "labs": [
+        {"name": "BNP > 400", "label": "Elevated BNP", "active": true},
+        {"name": "Cr > 1.5", "label": "Elevated Creatinine", "active": false},
+        {"name": "HbA1c > 7", "label": "Poor Glycemic Control", "active": false}
+      ],
+      "meds": [
+        {"name": "Loop diuretics", "label": "Furosemide/Torsemide", "active": true},
+        {"name": "SGLT2i", "label": "SGLT2 Inhibitor", "active": false},
+        {"name": "Metformin", "label": "Metformin", "active": false}
+      ]
+    }
+  },
+  {
+    "id": "tradeoff-explorer",
+    "title": "Model Evaluation & Tradeoff Thinking",
+    "subtitle": "Threshold selection and clinical cost-sensitivity",
+    "status": "Thesis Component",
+    "tags": ["Evaluation", "Precision-Recall", "Clinical AI"],
+    "problem": "Standard ML evaluation metrics assume symmetric error costs, but in clinical settings, false negatives (missed diagnoses) often carry far higher cost than false positives (unnecessary workup). Default threshold selection methods don't account for this asymmetry.",
+    "approach": "I'm developing a framework for cost-sensitive threshold selection that takes clinical cost ratios as input and outputs the optimal operating threshold along with decision curve analysis to support clinical deployment decisions.",
+    "impact": "Preliminary results show that cost-optimal thresholds differ substantially from F1-optimal thresholds in high-stakes clinical scenarios, with implications for which patients receive intervention and which are missed.",
+    "myRole": "Framework design, analysis, visualization development.",
+    "tools": ["Python", "scikit-learn", "matplotlib", "Decision curve analysis"],
+    "pipeline": [
+      {"id": "t1", "label": "Trained Model", "description": "A calibrated probability model outputting P(outcome) for each patient."},
+      {"id": "t2", "label": "Cost Specification", "description": "Clinical team specifies relative costs: C(FN)/C(FP) — how much worse is a missed case vs. a false alarm?"},
+      {"id": "t3", "label": "Threshold Search", "description": "Cost-sensitive threshold optimization identifies the operating point that minimizes expected clinical harm."},
+      {"id": "t4", "label": "Decision Curve", "description": "Decision curve analysis validates the threshold across a range of clinical net benefit thresholds."},
+      {"id": "t5", "label": "Deployment Config", "description": "Final threshold, expected precision, recall, and clinical impact summary for deployment review."}
+    ]
+  }
+]
