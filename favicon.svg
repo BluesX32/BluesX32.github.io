@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <!-- Background -->
+  <rect width="32" height="32" rx="6" fill="#1a3a5c"/>
+
+  <!-- Rod of Asclepius (simplified) -->
+  <!-- Staff -->
+  <line x1="16" y1="5" x2="16" y2="27" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round"/>
+
+  <!-- Serpent -->
+  <path d="M16 9
+    C 21 11, 21 15, 16 16
+    C 11 17, 11 21, 16 23"
+    stroke="#5c97d9" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+
+  <!-- Serpent head -->
+  <ellipse cx="17.5" cy="7.5" rx="2.5" ry="1.8" fill="#5c97d9" transform="rotate(-15 17.5 7.5)"/>
+</svg>
