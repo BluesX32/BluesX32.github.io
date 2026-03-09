@@ -1,156 +1,155 @@
 [
   {
     "id": "note-summarization",
-    "title": "Clinical Note Summarization",
-    "subtitle": "Structured extraction from unstructured clinical text",
-    "status": "MS Thesis",
-    "tags": ["NLP", "Summarization", "Clinical Notes"],
-    "problem": "Clinical progress notes contain rich diagnostic reasoning, but their length and unstructured nature make them difficult to use computationally or for rapid clinical review. Existing summarization methods treat notes as generic text, ignoring clinical structure.",
-    "approach": "I developed a hybrid approach that combines span extraction with abstractive generation, guided by a problem-oriented clinical schema. The model was trained on synthetically annotated notes and evaluated against clinician-written summaries.",
-    "impact": "The system produces structured summaries in a Problems / Medications / Assessment / Plan format, with span-level provenance linking summary bullets back to source text. Clinician preference ratings favor the hybrid approach over extractive and fully abstractive baselines.",
-    "myRole": "End-to-end: problem formulation, annotation scheme design, model development, evaluation design, and manuscript writing.",
-    "tools": ["Python", "HuggingFace Transformers", "spaCy", "MIMIC-III (synthetic)", "BioASQ", "i2b2"],
+    "title": "AgentDose: Steroid Dose Extraction from OMOP",
+    "subtitle": "NLP parsers + LLM agents for scalable medication extraction",
+    "status": "Active · OHDSI 2025 Nominee",
+    "tags": ["Clinical NLP", "LLM Agents", "OMOP CDM", "Pharmacoepidemiology"],
+    "problem": "Corticosteroid exposure is a critical variable in pharmacoepidemiology and rheumatology research, but dosing information in EHR data is largely trapped in free-text prescription signatures — not in structured fields. This means most OMOP-based studies on steroid exposure are either impossible or rely on rough proxies that don't capture titration, tapering, or actual administered dose.",
+    "approach": "AgentDose combines rule-based NLP parsers with LLM agents to extract structured dosing information (drug, dose, frequency, duration, route) from prescription sig fields in OMOP CDM databases. The hybrid approach uses deterministic parsers for well-formed sigs and LLM agents for ambiguous or complex cases, with a validation layer comparing against manually adjudicated gold standards.",
+    "impact": "Nominated for Best Community Contribution Showcase at OHDSI Global Symposium 2025. The framework is being developed as an open-source R package to support reproducible steroid exposure calculation across distributed OHDSI partner databases, enabling multi-site pharmacoepidemiologic analyses that were previously infeasible.",
+    "myRole": "Led development of the extraction framework, designed and evaluated NLP parsers and LLM-based approaches, presented at OHDSI 2025. Developing the open-source R package for multi-site deployment.",
+    "tools": ["Python", "R", "spaCy", "LLM APIs", "OMOP CDM", "OHDSI ATLAS", "SQL"],
     "pipeline": [
-      {"id": "p1", "label": "Input Note", "description": "A raw clinical progress note — narrative, heterogeneous, often hundreds of tokens."},
-      {"id": "p2", "label": "Span Detection", "description": "A fine-tuned span classifier identifies clinically relevant segments: problems, medications, assessments."},
-      {"id": "p3", "label": "Schema Mapping", "description": "Detected spans are mapped to a structured clinical schema: Problems / Meds / Assessment / Plan."},
-      {"id": "p4", "label": "Abstractive Refinement", "description": "A seq2seq model refines each schema slot, improving fluency while preserving clinical accuracy."},
-      {"id": "p5", "label": "Structured Summary", "description": "Final output: a schema-aligned summary with provenance links back to source spans."}
+      {"id": "p1", "label": "OMOP Drug Records", "description": "Source: OMOP CDM drug_exposure table, containing prescription records with sig (signature) free-text fields alongside structured fields."},
+      {"id": "p2", "label": "Rule-Based Parser", "description": "A deterministic NLP parser extracts dose, frequency, route, and duration from well-formed prescription signatures using regex patterns and clinical vocabulary."},
+      {"id": "p3", "label": "LLM Agent", "description": "For ambiguous, complex, or non-standard sigs, an LLM agent resolves extraction with structured prompting and constrained output schemas."},
+      {"id": "p4", "label": "Dose Normalization", "description": "Extracted values are normalized to standard units (mg/day equivalent) and mapped to OMOP drug concept IDs for cross-site comparability."},
+      {"id": "p5", "label": "Validated Exposure", "description": "Final structured steroid exposure records with daily dose estimates, adjudicated against gold-standard chart review for precision/recall evaluation."}
     ],
-    "demoNote": "Patient is a 67-year-old male with a history of type 2 diabetes mellitus, hypertension, and stage 3 chronic kidney disease presenting with three days of worsening dyspnea on exertion and bilateral lower extremity edema. He reports no chest pain, no orthopnea, and no paroxysmal nocturnal dyspnea. He denies fever, chills, or productive cough. He has been compliant with his medications including metformin 1000mg twice daily, lisinopril 10mg daily, amlodipine 5mg daily, and furosemide 40mg daily. His furosemide was recently increased from 20mg to 40mg by his PCP two weeks ago. On review of systems, he notes mild fatigue and decreased appetite over the past week. Vital signs are significant for blood pressure 158/94, heart rate 88, respiratory rate 18, oxygen saturation 94% on room air. On physical examination, he is in mild respiratory distress. Cardiovascular exam reveals an elevated JVP and an S3 gallop. Pulmonary exam reveals bibasilar crackles. Bilateral pitting edema is present to the mid-calf. BMP is notable for creatinine 2.1 (baseline 1.8), BUN 34, potassium 4.2. BNP is 980. Chest X-ray shows cardiomegaly with pulmonary vascular congestion consistent with volume overload. ECG shows normal sinus rhythm without acute ST changes. The clinical picture is most consistent with acute decompensated heart failure in the setting of underlying CKD and medication titration.",
+    "demoNote": "Patient is a 45-year-old female with dermatomyositis presenting for follow-up. Current immunosuppressant regimen includes prednisone 40mg daily with a plan to taper by 10mg every two weeks until reaching 10mg daily, then reassess. She is also on azathioprine 150mg daily, hydroxychloroquine 400mg daily, and omeprazole 20mg daily for GI prophylaxis. Recent creatine kinase was 320 (down from 1800 at diagnosis). Aldolase 8.5. She reports improved proximal muscle strength and decreased skin involvement over the past month. Plan: continue current prednisone taper as tolerated; recheck CK and aldolase in 4 weeks; consider reducing azathioprine if labs remain stable; patient counseled on bone protection with calcium and vitamin D supplementation while on prolonged steroid therapy.",
     "demoSummary": {
       "problems": [
-        {"text": "Acute decompensated heart failure", "spans": ["acute decompensated heart failure"], "highlight": "hf"},
-        {"text": "Volume overload — bilateral LE edema, bibasilar crackles, elevated JVP", "spans": ["bilateral lower extremity edema", "bibasilar crackles", "elevated JVP"], "highlight": "volume"},
-        {"text": "CKD stage 3 with creatinine rise (2.1, baseline 1.8)", "spans": ["stage 3 chronic kidney disease", "creatinine 2.1 (baseline 1.8)"], "highlight": "ckd"},
-        {"text": "Hypertension — BP 158/94 on antihypertensives", "spans": ["hypertension", "blood pressure 158/94"], "highlight": "htn"}
+        {"text": "Dermatomyositis — improving (CK 320, down from 1800 at diagnosis)", "spans": ["dermatomyositis", "creatine kinase was 320 (down from 1800 at diagnosis)"], "highlight": "hf"},
+        {"text": "Proximal muscle weakness — improved on current regimen", "spans": ["improved proximal muscle strength"], "highlight": "volume"},
+        {"text": "Skin involvement — decreasing", "spans": ["decreased skin involvement"], "highlight": "ckd"}
       ],
       "medications": [
-        {"text": "Metformin 1000mg BID", "spans": ["metformin 1000mg twice daily"], "highlight": "med"},
-        {"text": "Lisinopril 10mg daily", "spans": ["lisinopril 10mg daily"], "highlight": "med"},
-        {"text": "Amlodipine 5mg daily", "spans": ["amlodipine 5mg daily"], "highlight": "med"},
-        {"text": "Furosemide 40mg daily (recently increased from 20mg)", "spans": ["furosemide 40mg daily", "increased from 20mg to 40mg"], "highlight": "med"}
+        {"text": "Prednisone 40mg daily → taper 10mg q2wks → target 10mg daily", "spans": ["prednisone 40mg daily", "taper by 10mg every two weeks until reaching 10mg daily"], "highlight": "med"},
+        {"text": "Azathioprine 150mg daily", "spans": ["azathioprine 150mg daily"], "highlight": "med"},
+        {"text": "Hydroxychloroquine 400mg daily", "spans": ["hydroxychloroquine 400mg daily"], "highlight": "med"},
+        {"text": "Omeprazole 20mg daily (GI prophylaxis)", "spans": ["omeprazole 20mg daily for GI prophylaxis"], "highlight": "med"}
       ],
       "assessment": [
-        {"text": "BNP 980, CXR with pulmonary vascular congestion, S3 gallop — clinical picture consistent with ADHF", "spans": ["BNP is 980", "pulmonary vascular congestion", "S3 gallop"], "highlight": "assess"},
-        {"text": "Creatinine elevation likely reflects cardiorenal syndrome vs. diuretic effect", "spans": ["creatinine 2.1 (baseline 1.8)"], "highlight": "ckd"}
+        {"text": "Clinical improvement — CK trending down, muscle strength recovering", "spans": ["creatine kinase was 320", "improved proximal muscle strength"], "highlight": "assess"},
+        {"text": "Aldolase 8.5 — within normal limits", "spans": ["Aldolase 8.5"], "highlight": "ckd"}
       ],
       "plan": [
-        {"text": "IV diuresis; monitor renal function and electrolytes closely", "spans": [], "highlight": "plan"},
-        {"text": "Cardiology consult for further evaluation and management", "spans": [], "highlight": "plan"},
-        {"text": "Continue antihypertensives; reassess after diuresis", "spans": [], "highlight": "htn"}
+        {"text": "Continue prednisone taper as tolerated; recheck labs in 4 weeks", "spans": ["continue current prednisone taper", "recheck CK and aldolase in 4 weeks"], "highlight": "plan"},
+        {"text": "Consider reducing azathioprine if labs remain stable", "spans": ["consider reducing azathioprine if labs remain stable"], "highlight": "plan"},
+        {"text": "Counsel on bone protection: Ca + Vit D supplementation", "spans": ["calcium and vitamin D supplementation while on prolonged steroid therapy"], "highlight": "htn"}
       ]
     }
   },
   {
     "id": "decision-pathway",
-    "title": "Clinical Decision Support",
-    "subtitle": "Decision pathway modeling and alert design",
-    "status": "Ongoing Research",
-    "tags": ["CDS", "Workflow", "Alert Design"],
-    "problem": "Clinical decision support tools often generate alerts that are ignored, overridden, or actively resented by clinicians. The problem is rarely algorithmic — it's contextual. I'm exploring how decision pathway modeling can improve the relevance and timing of clinical recommendations.",
-    "approach": "I'm building a framework for representing clinical decision pathways as directed graphs, where nodes encode clinical states and edges encode conditional actions. The framework supports tracing how recommendations propagate through a pathway and identifying intervention points.",
-    "impact": "This work is early-stage. The goal is a formal vocabulary for representing CDS logic that supports retrospective analysis of alert override patterns and prospective design of context-aware alerts.",
-    "myRole": "Concept development, literature review, preliminary framework design.",
-    "tools": ["Python", "NetworkX", "Clinical guideline documents", "FHIR CDS Hooks"],
+    "title": "Disease Severity Framework",
+    "subtitle": "Conceptual and computational framework for representing severity",
+    "status": "MS Thesis · In Progress",
+    "tags": ["Disease Severity", "Conceptual Modeling", "Clinical Informatics", "Scoping Review"],
+    "problem": "Disease severity is a central concept in clinical medicine — it drives treatment intensity, prognosis, escalation decisions, and resource allocation. Yet there is no unified conceptual or computational framework for representing severity. Existing severity scores (APACHE-II, SOFA, Child-Pugh) are domain-specific predictive instruments that have been reified into measures of disease state, often encoding hidden assumptions about what severity means.",
+    "approach": "My thesis has two components: (1) a PRISMA-ScR scoping review synthesizing definitions and conceptualizations of disease severity across clinical domains, and (2) a unified conceptual framework representing severity as multilevel and multidimensional — capturing objective markers, functional impact, temporal trajectory, and patient context. The framework is being formalized as a temporal state-transition model to support computational implementation.",
+    "impact": "A manuscript on the conceptual framework is in preparation for Journal of Biomedical Informatics. The framework will serve as the conceptual foundation for computational severity representations that can support clinical decision support, risk stratification, and phenotyping research. It also informs an open-source systematic review platform being developed alongside the thesis.",
+    "myRole": "Primary investigator: scoping review design, literature screening, conceptual framework development, manuscript writing. PI: Dr. Harold P. Lehmann, Johns Hopkins School of Medicine.",
+    "tools": ["PRISMA-ScR methodology", "OHDSI ontologies", "Python", "Overleaf", "Covidence", "Evidence Synthesis Platform"],
     "pipeline": [
-      {"id": "d1", "label": "Clinical State", "description": "The current patient context: diagnoses, vitals, active medications, recent labs."},
-      {"id": "d2", "label": "Rule Evaluation", "description": "Pathway logic evaluates the clinical state against defined criteria and thresholds."},
-      {"id": "d3", "label": "Recommendation", "description": "A candidate recommendation is generated — a suggested action, order, or referral."},
-      {"id": "d4", "label": "Context Filter", "description": "Context filters suppress recommendations that are inappropriate given the clinical setting."},
-      {"id": "d5", "label": "Alert Delivery", "description": "A targeted, context-aware alert is delivered at the point of care."}
+      {"id": "d1", "label": "Scoping Review", "description": "PRISMA-ScR protocol across PubMed, EMBASE, and clinical informatics literature — synthesizing how severity is defined, operationalized, and measured across cardiology, oncology, neurology, and other domains."},
+      {"id": "d2", "label": "Conceptual Analysis", "description": "Extraction and coding of severity dimensions: biomarkers, functional status, disease trajectory, patient context, and clinical judgment. Identifying commonalities and domain-specific variation."},
+      {"id": "d3", "label": "Framework Design", "description": "Developing a multilevel, multidimensional conceptual framework — representing severity as a composite construct that integrates objective, functional, temporal, and contextual dimensions."},
+      {"id": "d4", "label": "Formalization", "description": "Translating the conceptual framework into a temporal state-transition model using ontology-informed structures for computational representation."},
+      {"id": "d5", "label": "Validation", "description": "Validating framework coverage against clinical vignettes and existing severity scores; identifying gaps in current operationalizations."}
     ],
     "decisionNodes": [
       {
-        "id": "n1", "label": "Initial Presentation",
+        "id": "n1", "label": "Biomarker Level",
         "x": 60, "y": 120,
-        "rationale": "Patient presents with new-onset chest pain. Initial triage determines hemodynamic stability and routes to appropriate workup.",
-        "features": ["Chief complaint", "Hemodynamic status", "Vital signs"],
-        "next": "Risk stratification and ECG interpretation"
+        "rationale": "The most common dimension: objective physiological or laboratory markers that deviate from normal. Examples: troponin in ACS, creatinine in CKD, CD4 count in HIV. Often the most measurable but not sufficient to capture severity.",
+        "features": ["Lab values", "Vital signs", "Imaging findings", "Biomarkers"],
+        "next": "Feeds into functional impairment assessment — how biomarker deviation translates to lived impact."
       },
       {
-        "id": "n2", "label": "ECG Interpretation",
+        "id": "n2", "label": "Functional Impact",
         "x": 200, "y": 60,
-        "rationale": "ECG findings are evaluated for ST changes, conduction abnormalities, and LBBB patterns that may indicate acute MI.",
-        "features": ["ST segment elevation/depression", "Q waves", "LBBB"],
-        "next": "If STEMI: immediate cath lab activation. If non-diagnostic: troponin serial testing."
+        "rationale": "How the disease limits what a patient can do. NYHA class for heart failure, ECOG status for cancer, ADL/IADL for frailty. Captures severity as experienced by the patient, not just measured by clinicians.",
+        "features": ["NYHA / ECOG", "ADL / IADL", "Patient-reported outcomes", "Activity limitation"],
+        "next": "Both biomarker level and functional impact are shaped by disease trajectory over time."
       },
       {
-        "id": "n3", "label": "Risk Stratification",
+        "id": "n3", "label": "Temporal Trajectory",
         "x": 200, "y": 180,
-        "rationale": "HEART score or TIMI score applied to risk-stratify patients with non-diagnostic ECG.",
-        "features": ["History features", "ECG", "Age", "Risk factors", "Troponin"],
-        "next": "Low-risk: expedited discharge pathway. High-risk: admit for further evaluation."
+        "rationale": "Whether the disease is stable, progressing, or remitting changes the clinical meaning of any snapshot. A creatinine of 2.1 means very different things if it rose from 1.8 last week versus has been stable for 3 years.",
+        "features": ["Rate of change", "Disease stage", "Flare / remission patterns", "Time since diagnosis"],
+        "next": "Trajectory interacts with patient context to determine clinical urgency and treatment response."
       },
       {
-        "id": "n4", "label": "Admission Decision",
+        "id": "n4", "label": "Patient Context",
         "x": 340, "y": 120,
-        "rationale": "Admission or discharge decision integrates clinical risk score, serial troponin results, and patient and clinician preferences.",
-        "features": ["HEART score ≥ 4", "Troponin trend", "Social factors"],
-        "next": "Admitted patients: cardiology consult, stress testing or angiography."
+        "rationale": "Comorbidities, age, frailty, and social context modulate how a given biomarker or functional state maps onto severity for a specific patient. The same SOFA score carries different weight in a 30-year-old vs. an 80-year-old with multiple organ dysfunction.",
+        "features": ["Comorbidity burden", "Age / frailty", "Social determinants", "Treatment history"],
+        "next": "Integrating all dimensions yields a severity representation that supports clinical decision-making."
       },
       {
-        "id": "n5", "label": "Disposition",
+        "id": "n5", "label": "Composite Severity",
         "x": 480, "y": 120,
-        "rationale": "Final disposition: discharge with follow-up, observation, or inpatient admission based on integrated clinical judgment.",
-        "features": ["Risk tier", "Patient preferences", "Resource availability"],
-        "next": "Follow-up planning or inpatient pathway continues."
+        "rationale": "No single dimension captures severity fully. The framework integrates biomarker, functional, trajectory, and context dimensions into a composite representation that can support risk stratification, treatment intensity decisions, and phenotyping research.",
+        "features": ["Multidimensional synthesis", "Clinical utility", "Computational operationalization"],
+        "next": "Enables downstream applications: CDS, phenotyping, comparative effectiveness, prognostic modeling."
       }
     ]
   },
   {
     "id": "cohort-builder",
-    "title": "EHR Phenotyping & Real-World Data",
-    "subtitle": "Cohort construction and phenotype validation",
-    "status": "Coursework + Research",
-    "tags": ["EHR", "Phenotyping", "RWE"],
-    "problem": "Defining a patient cohort from EHR data is deceptively difficult. ICD codes alone miss many true cases; NLP-based phenotyping improves sensitivity but requires labeled data. I'm exploring hybrid approaches that combine structured and unstructured data for more complete cohort identification.",
-    "approach": "I've built a cohort construction pipeline that integrates ICD code filtering, NLP-based mention extraction, and laboratory result criteria. The pipeline supports modular criterion addition and includes a validation layer for estimating phenotyping accuracy.",
-    "impact": "The pipeline has been applied to define cohorts for two ongoing projects. Key finding: NLP-based inclusion adds ~12% of cases missed by ICD codes alone, but also introduces ~5% false positives requiring downstream adjudication.",
-    "myRole": "Pipeline development, annotation protocol design, preliminary validation.",
-    "tools": ["Python", "pandas", "spaCy", "SQL", "OMOP CDM"],
+    "title": "OHDSI Network Study: Dermatomyositis Phenotyping",
+    "subtitle": "Computable phenotypes and multi-site comparative effectiveness in OMOP",
+    "status": "Active · Myositis Center, Johns Hopkins Rheumatology",
+    "tags": ["OMOP CDM", "OHDSI", "Phenotyping", "Comparative Effectiveness"],
+    "problem": "Dermatomyositis is a rare inflammatory myopathy with significant treatment variability and poorly characterized adverse event profiles. Because it is rare, single-site studies are underpowered. Multi-site studies using heterogeneous data systems are complex to coordinate. OHDSI's federated network approach offers a path to the scale needed — but only if phenotyping algorithms are carefully validated across sites.",
+    "approach": "I developed computable phenotypes and cohort discovery pipelines for dermatomyositis across multi-institution OMOP CDM databases using OHDSI ATLAS, contributing to a distributed network study evaluating immunosuppressant therapies and medication-related adverse events. I'm also developing an R package to support distributed cohort evaluation and meta-analysis across OHDSI partner databases.",
+    "impact": "The phenotyping approach enables a properly powered multi-site comparative effectiveness analysis that would be impossible at any single institution. The R package, once released, will support reproducible distributed cohort evaluation for rare disease research across the OHDSI community.",
+    "myRole": "Developed computable phenotypes, contributed to study design and comparative effectiveness analysis. Leading R package development for distributed cohort evaluation. PI: Dr. Christopher A. Mecoli, Johns Hopkins Rheumatology.",
+    "tools": ["R", "OHDSI ATLAS", "OMOP CDM", "SQL", "FeatureExtraction", "CohortDiagnostics"],
     "pipeline": [
-      {"id": "c1", "label": "Raw EHR Data", "description": "Source data from EHR including structured (ICD, labs, meds) and unstructured (notes) fields."},
-      {"id": "c2", "label": "ICD Filtering", "description": "Initial cohort filtered by relevant ICD-9/10 codes. Fast but incomplete — misses uncoded cases."},
-      {"id": "c3", "label": "NLP Expansion", "description": "NLP-based mention extraction identifies patients with diagnostic mentions in notes not captured by codes."},
-      {"id": "c4", "label": "Lab Criteria", "description": "Laboratory value criteria applied to confirm or refute phenotype where gold-standard values exist."},
-      {"id": "c5", "label": "Validated Cohort", "description": "Final cohort with estimated PPV/sensitivity from chart review adjudication."}
+      {"id": "c1", "label": "OMOP CDM Data", "description": "Source: multi-institution OMOP CDM databases with condition, drug, measurement, and observation domains standardized to OMOP vocabulary."},
+      {"id": "c2", "label": "ICD Phenotyping", "description": "Initial cohort defined using ICD-10 codes for dermatomyositis and related inflammatory myopathy diagnoses, filtered by code frequency and setting requirements."},
+      {"id": "c3", "label": "Cohort Diagnostics", "description": "OHDSI CohortDiagnostics evaluates phenotype performance across sites: prevalence, incidence, attrition, and concept set coverage before any analysis begins."},
+      {"id": "c4", "label": "Exposure Definition", "description": "Immunosuppressant exposure cohorts defined using OMOP drug concept hierarchies: corticosteroids, azathioprine, mycophenolate, rituximab, IVIG."},
+      {"id": "c5", "label": "Distributed Analysis", "description": "Analysis package runs locally at each site; only aggregate results are shared. Meta-analysis synthesizes site-level estimates into network-wide comparative effectiveness results."}
     ],
     "cohortCriteria": {
       "icd": [
-        {"code": "I50.x", "label": "Heart Failure", "active": true},
-        {"code": "N18.3", "label": "CKD Stage 3", "active": false},
-        {"code": "E11.x", "label": "Type 2 DM", "active": true}
+        {"code": "M33.0x", "label": "Dermatomyositis", "active": true},
+        {"code": "M33.1x", "label": "Other Dermatomyositis", "active": true},
+        {"code": "M33.9x", "label": "Dermatomyositis, unspec.", "active": false}
       ],
       "labs": [
-        {"name": "BNP > 400", "label": "Elevated BNP", "active": true},
-        {"name": "Cr > 1.5", "label": "Elevated Creatinine", "active": false},
-        {"name": "HbA1c > 7", "label": "Poor Glycemic Control", "active": false}
+        {"name": "CK > 3× ULN", "label": "Elevated Creatine Kinase", "active": true},
+        {"name": "Aldolase > ULN", "label": "Elevated Aldolase", "active": false},
+        {"name": "ANA positive", "label": "Positive ANA", "active": false}
       ],
       "meds": [
-        {"name": "Loop diuretics", "label": "Furosemide/Torsemide", "active": true},
-        {"name": "SGLT2i", "label": "SGLT2 Inhibitor", "active": false},
-        {"name": "Metformin", "label": "Metformin", "active": false}
+        {"name": "Prednisone", "label": "Corticosteroids", "active": true},
+        {"name": "Azathioprine", "label": "Azathioprine", "active": false},
+        {"name": "Mycophenolate", "label": "Mycophenolate", "active": false}
       ]
     }
   },
   {
     "id": "tradeoff-explorer",
-    "title": "Model Evaluation & Tradeoff Thinking",
-    "subtitle": "Threshold selection and clinical cost-sensitivity",
-    "status": "Thesis Component",
-    "tags": ["Evaluation", "Precision-Recall", "Clinical AI"],
-    "problem": "Standard ML evaluation metrics assume symmetric error costs, but in clinical settings, false negatives (missed diagnoses) often carry far higher cost than false positives (unnecessary workup). Default threshold selection methods don't account for this asymmetry.",
-    "approach": "I'm developing a framework for cost-sensitive threshold selection that takes clinical cost ratios as input and outputs the optimal operating threshold along with decision curve analysis to support clinical deployment decisions.",
-    "impact": "Preliminary results show that cost-optimal thresholds differ substantially from F1-optimal thresholds in high-stakes clinical scenarios, with implications for which patients receive intervention and which are missed.",
-    "myRole": "Framework design, analysis, visualization development.",
-    "tools": ["Python", "scikit-learn", "matplotlib", "Decision curve analysis"],
+    "title": "Racial Disparities in Post-Surgical ED Utilization",
+    "subtitle": "Multi-state retrospective cohort study using HCUP data",
+    "status": "Published (In Press) · Int J Gynaecol Obstet",
+    "tags": ["Health Equity", "Administrative Claims", "HCUP", "Logistic Regression"],
+    "problem": "Racial disparities in surgical outcomes and post-operative healthcare utilization are well-documented in aggregate, but the mechanisms and modifiable factors are less understood. Emergency department visits within 30 days of hysterectomy represent a measurable, clinically meaningful outcome that reflects both quality of care and access to follow-up.",
+    "approach": "Processed multi-state HCUP databases covering over 48 million inpatient and outpatient records. Designed cohort selection and filtering pipelines to identify approximately 200,000 hysterectomy cases. Built multivariable logistic regression and sensitivity analysis workflows in R to evaluate predictors of 30-day ED utilization, with race/ethnicity as the primary exposure and a broad set of clinical and demographic covariates.",
+    "impact": "First-author, corresponding author publication in International Journal of Gynaecology and Obstetrics (in-press). Results characterize systematic racial disparities in post-hysterectomy ED utilization and identify clinical factors that partially mediate and partially moderate these disparities, with implications for targeted quality improvement interventions.",
+    "myRole": "First and corresponding author. Designed cohort selection pipeline, built all analytical workflows in R, generated all statistical outputs, wrote the manuscript.",
+    "tools": ["R", "HCUP (Healthcare Cost and Utilization Project)", "Multivariable logistic regression", "Sensitivity analysis", "SQL Server"],
     "pipeline": [
-      {"id": "t1", "label": "Trained Model", "description": "A calibrated probability model outputting P(outcome) for each patient."},
-      {"id": "t2", "label": "Cost Specification", "description": "Clinical team specifies relative costs: C(FN)/C(FP) — how much worse is a missed case vs. a false alarm?"},
-      {"id": "t3", "label": "Threshold Search", "description": "Cost-sensitive threshold optimization identifies the operating point that minimizes expected clinical harm."},
-      {"id": "t4", "label": "Decision Curve", "description": "Decision curve analysis validates the threshold across a range of clinical net benefit thresholds."},
-      {"id": "t5", "label": "Deployment Config", "description": "Final threshold, expected precision, recall, and clinical impact summary for deployment review."}
+      {"id": "t1", "label": "HCUP Databases", "description": "Multi-state HCUP inpatient and outpatient databases — 48M+ records. Covers procedures, diagnoses, demographics, and payer information at the encounter level."},
+      {"id": "t2", "label": "Cohort Selection", "description": "Hysterectomy cases identified by procedure codes (ICD-10-PCS / CPT). Exclusions applied for age, comorbidity extremes, and incomplete follow-up windows. Final cohort: ~200,000 cases."},
+      {"id": "t3", "label": "Outcome Ascertainment", "description": "30-day ED visits identified by linking index hospitalization to subsequent ED encounters within the same state database, using probabilistic and deterministic linkage strategies."},
+      {"id": "t4", "label": "Statistical Modeling", "description": "Multivariable logistic regression adjusting for age, insurance, comorbidities, hospital characteristics, procedure type, and state. Sensitivity analyses test alternative cohort definitions."},
+      {"id": "t5", "label": "Disparity Analysis", "description": "Racial/ethnic differences in ED utilization estimated as adjusted odds ratios. Mediation and interaction analyses evaluate contributions of modifiable vs. structural factors."}
     ]
   }
 ]

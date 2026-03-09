@@ -4,18 +4,17 @@
     "basePath": "/"
   },
   "cv": {
-    "path": "/cv/cv.pdf",
+    "path": "/cv/ChristelleXiong_CV_March2026.pdf",
     "label": "Download CV"
   },
   "scheduling": {
-    "calendlyUrl": "",
+    "calendlyUrl": "https://calendly.com/christelle-xiong-32/30min",
     "label": "Schedule a Meeting"
   },
   "social": {
-    "email": "your.email@example.com",
+    "email": "christelle.xiong.32@gmail.com",
     "github": "https://github.com/BluesX32",
-    "linkedin": "https://linkedin.com/in/yourprofile",
-    "scholar": "https://scholar.google.com/citations?user=YOURID",
-    "twitter": ""
+    "linkedin": "https://www.linkedin.com/in/minqi-xiong-a535a0245",
+    "scholar": "https://scholar.google.com/citations?user=5mUyZowAAAAJ"
   }
 }

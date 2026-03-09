@@ -1,62 +1,182 @@
 [
   {
-    "id": "pub-2024-01",
-    "title": "Automated Summarization of Clinical Notes: A Comparative Evaluation",
-    "authors": ["Your Name", "Co-Author A", "Co-Author B", "Mentor Name"],
-    "venue": "AMIA Annual Symposium",
-    "year": 2024,
-    "type": "conference",
-    "abstract": "We evaluate three approaches to automatic summarization of clinical progress notes, comparing extractive, abstractive, and hybrid methods on a manually annotated corpus of ICU notes. Results suggest that abstractive methods outperform extractive baselines on ROUGE but underperform on clinician preference ratings.",
+    "id": "pub-2026-01",
+    "title": "Assessing the Impact of Racial Disparities on 30-Day Emergency Department Visits Due to Hysterectomy Complications: A Multi-State Retrospective Cohort Study",
+    "authors": ["Xiong C", "Wang Y", "Dun C", "Borahay M", "Kharrazi H"],
+    "venue": "International Journal of Gynaecology and Obstetrics",
+    "year": 2026,
+    "type": "journal",
+    "abstract": "A multi-state retrospective cohort study evaluating the impact of racial disparities on 30-day emergency department utilization following hysterectomy complications, using HCUP databases covering approximately 200,000 hysterectomy cases. Multivariable logistic regression and sensitivity analysis identify systematic differences in ED utilization across racial groups.",
     "links": {
       "pdf": "",
       "doi": "",
       "arxiv": ""
     },
-    "bibtex": "@inproceedings{yourname2024summarization,\n  title={Automated Summarization of Clinical Notes: A Comparative Evaluation},\n  author={Your Name and Co-Author A and Co-Author B and Mentor Name},\n  booktitle={AMIA Annual Symposium},\n  year={2024}\n}"
+    "bibtex": "@article{xiong2026hysterectomy,\n  title={Assessing the Impact of Racial Disparities on 30-Day Emergency Department Visits Due to Hysterectomy Complications: A Multi-State Retrospective Cohort Study},\n  author={Xiong, C and Wang, Y and Dun, C and Borahay, M and Kharrazi, H},\n  journal={International Journal of Gynaecology and Obstetrics},\n  year={2026},\n  note={In press}\n}"
   },
   {
-    "id": "pub-2024-02",
-    "title": "Phenotyping Acute Kidney Injury in EHR Data: A Systematic Comparison of Rule-Based and ML Approaches",
-    "authors": ["Co-Author A", "Your Name", "Mentor Name"],
-    "venue": "Journal of the American Medical Informatics Association",
-    "year": 2024,
+    "id": "pub-2026-02",
+    "title": "Synergy of Diagnosis Coding Between Administrative Claims and Electronic Health Records of Large Patient Populations Across Multiple Healthcare Organizations",
+    "authors": ["Xiong C", "Pittell H", "Kitchen C", "Lasser E", "Kharrazi H"],
+    "venue": "JAMIA Open",
+    "year": 2026,
     "type": "journal",
-    "abstract": "This study compares rule-based and machine learning phenotyping algorithms for acute kidney injury using administrative and clinical data from a large academic medical center. We evaluate algorithm performance across patient subgroups and identify sources of systematic disagreement.",
+    "abstract": "Analysis of diagnostic concordance and discrepancies between administrative claims and EHR systems across 17 million patients at 56 healthcare organizations, using Optum Labs data. Evaluates systematic gaps in diagnosis coding and develops large-scale data quality assessment pipelines for real-world healthcare data.",
     "links": {
       "pdf": "",
-      "doi": "https://doi.org/10.1093/jamia/placeholder",
+      "doi": "",
       "arxiv": ""
     },
-    "bibtex": "@article{coauthor2024aki,\n  title={Phenotyping Acute Kidney Injury in EHR Data},\n  author={Co-Author A and Your Name and Mentor Name},\n  journal={JAMIA},\n  year={2024},\n  publisher={Oxford University Press}\n}"
+    "bibtex": "@article{xiong2026concordance,\n  title={Synergy of Diagnosis Coding Between Administrative Claims and Electronic Health Records},\n  author={Xiong, C and Pittell, H and Kitchen, C and Lasser, E and Kharrazi, H},\n  journal={JAMIA Open},\n  year={2026},\n  note={In press}\n}"
+  },
+  {
+    "id": "pub-2026-03",
+    "title": "A Multidimensional Hierarchical Framework for Sources of Bias in Real-World Healthcare Evidence: A Scoping Review",
+    "authors": ["Lee H", "Xiong C", "Baughman D", "Dun C", "Tong J", "Martin B", "Lehmann H", "Nagy P"],
+    "venue": "Journal of Biomedical Informatics",
+    "year": 2026,
+    "type": "journal",
+    "abstract": "A scoping review developing a multidimensional hierarchical framework for understanding and classifying sources of bias in real-world clinical EHR data. The framework provides structured vocabulary for bias identification and mitigation in observational health research.",
+    "links": {
+      "pdf": "",
+      "doi": "https://doi.org/10.1016/j.jbi.2026.104989",
+      "arxiv": ""
+    },
+    "bibtex": "@article{lee2026bias,\n  title={A Multidimensional Hierarchical Framework for Sources of Bias in Real-World Healthcare Evidence},\n  author={Lee, H and Xiong, C and Baughman, D and Dun, C and Tong, J and Martin, B and Lehmann, H and Nagy, P},\n  journal={Journal of Biomedical Informatics},\n  volume={174},\n  pages={104989},\n  year={2026},\n  doi={10.1016/j.jbi.2026.104989},\n  pmid={41571173}\n}"
+  },
+  {
+    "id": "pub-2026-04",
+    "title": "Hypertensive Disorders of Pregnancy and Premature Cardiovascular Disease in a Diverse Cohort of Young US Women",
+    "authors": ["Boyer T", "Barrett R", "Xiong C", "Bhansali R", "Wallace A", "Fang M", "Vaught AJ", "Selvin E", "Ndumele C", "Blaha M", "Michos E", "Coresh J", "Minhas A"],
+    "venue": "Circulation",
+    "year": 2026,
+    "type": "journal",
+    "abstract": "Analysis of hypertensive disorders of pregnancy and their association with premature cardiovascular disease in a diverse cohort of young US women. Uses large-scale real-world healthcare data to characterize long-term cardiovascular risk following pregnancy complications.",
+    "links": {
+      "pdf": "",
+      "doi": "https://doi.org/10.1161/CIRCULATIONAHA.125.078057",
+      "arxiv": ""
+    },
+    "bibtex": "@article{boyer2026hdp,\n  title={Hypertensive Disorders of Pregnancy and Premature Cardiovascular Disease in a Diverse Cohort of Young US Women},\n  author={Boyer, T and Barrett, R and Xiong, C and others},\n  journal={Circulation},\n  volume={153},\n  number={7},\n  pages={480--492},\n  year={2026},\n  doi={10.1161/CIRCULATIONAHA.125.078057},\n  pmid={41697979}\n}"
+  },
+  {
+    "id": "pub-2025-01",
+    "title": "Large Language Models in Critical Care Medicine: A Scoping Review",
+    "authors": ["Shi T", "Ma J", "Yu Z", "Xu H", "Xiong M", "Xiao M", "Li Y", "Zhao H", "Kong G"],
+    "venue": "JMIR Medical Informatics",
+    "year": 2025,
+    "type": "journal",
+    "abstract": "A scoping review synthesizing the current state of large language model applications in critical care medicine, covering clinical documentation, decision support, and real-time monitoring use cases. Evaluates evidence quality and identifies key gaps in prospective evaluation.",
+    "links": {
+      "pdf": "",
+      "doi": "https://doi.org/10.2196/76326",
+      "arxiv": ""
+    },
+    "bibtex": "@article{shi2025llm,\n  title={Large Language Models in Critical Care Medicine: A Scoping Review},\n  author={Shi, T and Ma, J and Yu, Z and Xu, H and Xiong, M and Xiao, M and Li, Y and Zhao, H and Kong, G},\n  journal={JMIR Medical Informatics},\n  volume={13},\n  pages={e76326},\n  year={2025},\n  doi={10.2196/76326},\n  pmid={41284992}\n}"
+  },
+  {
+    "id": "pub-2025-02",
+    "title": "Evaluation of Large Language Model Performance in Assessing Health Economic Study Quality",
+    "authors": ["Chen D", "Couperus CJ", "Lee S", "Barrett R", "Lee H", "Xiong MC", "Wang Y", "Wang Q", "Lehmann HP"],
+    "venue": "Journal of Health Economics and Outcomes Research",
+    "year": 2025,
+    "type": "journal",
+    "abstract": "Systematic evaluation of LLM performance in assessing methodological quality of health economic studies. Benchmarks LLM outputs against expert reviewer ratings and identifies calibration gaps relevant to automated evidence synthesis pipelines.",
+    "links": {
+      "pdf": "",
+      "doi": "https://doi.org/10.36469/001c.145214",
+      "arxiv": ""
+    },
+    "bibtex": "@article{chen2025llm,\n  title={Evaluation of Large Language Model Performance in Assessing Health Economic Study Quality},\n  author={Chen, D and Couperus, CJ and Lee, S and Barrett, R and Lee, H and Xiong, MC and Wang, Y and Wang, Q and Lehmann, HP},\n  journal={Journal of Health Economics and Outcomes Research},\n  volume={12},\n  number={2},\n  pages={154--162},\n  year={2025},\n  doi={10.36469/001c.145214},\n  pmid={41146963}\n}"
+  },
+  {
+    "id": "pub-2025-03",
+    "title": "Machine Learning-Based Identification and Validation of Immune-Related Biomarkers for Early Diagnosis and Targeted Therapy in Diabetic Retinopathy",
+    "authors": ["Tao Y", "Xiong M", "Peng Y", "Yao L", "Zhu H", "Zhou Q", "Ouyang J"],
+    "venue": "Gene",
+    "year": 2025,
+    "type": "journal",
+    "abstract": "Machine learning-based identification and external validation of immune-related biomarkers for early diagnosis of diabetic retinopathy, combining transcriptomic data with clinical feature analysis to identify potential therapeutic targets.",
+    "links": {
+      "pdf": "",
+      "doi": "https://doi.org/10.1016/j.gene.2024.149015",
+      "arxiv": ""
+    },
+    "bibtex": "@article{tao2025biomarkers,\n  title={Machine Learning-Based Identification and Validation of Immune-Related Biomarkers for Early Diagnosis in Diabetic Retinopathy},\n  author={Tao, Y and Xiong, M and Peng, Y and Yao, L and Zhu, H and Zhou, Q and Ouyang, J},\n  journal={Gene},\n  volume={934},\n  pages={149015},\n  year={2025},\n  doi={10.1016/j.gene.2024.149015},\n  pmid={39427825}\n}"
+  },
+  {
+    "id": "pub-review-01",
+    "title": "LLM-Based Agents for Automated Research Reproducibility in Alzheimer's Disease",
+    "authors": ["Dobbins N†", "Xiong C†", "Lan K", "Yetisgen M"],
+    "venue": "Journal of Medical Internet Research (Under Review)",
+    "year": 2025,
+    "type": "preprint",
+    "abstract": "Co-first authored study developing and evaluating LLM-based agent pipelines for automating and improving reproducibility of research workflows in Alzheimer's disease literature, with implications for systematic review automation and evidence synthesis infrastructure.",
+    "links": {
+      "pdf": "",
+      "doi": "",
+      "arxiv": ""
+    },
+    "bibtex": "@article{dobbins2025llm,\n  title={LLM-Based Agents for Automated Research Reproducibility in Alzheimer's Disease},\n  author={Dobbins, N and Xiong, C and Lan, K and Yetisgen, M},\n  journal={Journal of Medical Internet Research},\n  year={2025},\n  note={Under Review; co-first authorship}\n}"
+  },
+  {
+    "id": "pub-2025-04",
+    "title": "AgentDose: Toward Accurate and Scalable Steroid Dose Extraction in OMOP Using NLP Parsers and LLM Agents",
+    "authors": ["Xiong C", "Martin B", "Westlund E", "Kelly W", "Mecoli C"],
+    "venue": "OHDSI Global Symposium 2025 (Nominee, Best Community Contribution Showcase)",
+    "year": 2025,
+    "type": "poster",
+    "abstract": "Presents AgentDose, a hybrid pipeline combining rule-based NLP parsers with LLM agents for extracting corticosteroid dosing instructions from OMOP CDM prescription signatures at scale. Enables reproducible steroid exposure estimation across distributed OHDSI partner databases.",
+    "links": {
+      "pdf": "",
+      "doi": "",
+      "arxiv": ""
+    },
+    "bibtex": "@misc{xiong2025agentdose,\n  title={AgentDose: Toward Accurate and Scalable Steroid Dose Extraction in OMOP Using NLP Parsers and LLM Agents},\n  author={Xiong, C and Martin, B and Westlund, E and Kelly, W and Mecoli, C},\n  howpublished={OHDSI Global Symposium 2025 (Nominee, Best Community Contribution Showcase)},\n  year={2025}\n}"
+  },
+  {
+    "id": "pub-2025-05",
+    "title": "Racial Disparities in 30-Day ED Visits Due to Hysterectomy Complications",
+    "authors": ["Xiong C", "Wang Y", "Dun C", "Kharrazi H"],
+    "venue": "AMIA Annual Symposium 2025 (Podium; Selected for Recording & On-Demand Dissemination)",
+    "year": 2025,
+    "type": "conference",
+    "abstract": "Podium presentation examining racial disparities in 30-day emergency department utilization following hysterectomy complications, selected for recording and on-demand dissemination at AMIA Annual Symposium 2025.",
+    "links": {
+      "pdf": "",
+      "doi": "",
+      "arxiv": ""
+    },
+    "bibtex": "@inproceedings{xiong2025disparities,\n  title={Racial Disparities in 30-Day ED Visits Due to Hysterectomy Complications},\n  author={Xiong, C and Wang, Y and Dun, C and Kharrazi, H},\n  booktitle={AMIA Annual Symposium},\n  year={2025},\n  note={Podium presentation; selected for recording}\n}"
+  },
+  {
+    "id": "pub-2024-01",
+    "title": "Reinforcement Learning-Based Decision-Making for Renal Replacement Therapy in ICU-Acquired AKI Patients",
+    "authors": ["Zhang H", "Xiong M", "Shi T", "Liu W", "Xu H", "Zhao H", "Kong G"],
+    "venue": "ACM KDD 2024 Workshop on AI for Decision Support in Healthcare",
+    "year": 2024,
+    "type": "conference",
+    "abstract": "Reinforcement learning framework for optimizing renal replacement therapy decisions in ICU patients with acute kidney injury, evaluated on real-world EHR data. Demonstrates improved decision policy performance relative to standard of care under clinical outcome metrics.",
+    "links": {
+      "pdf": "",
+      "doi": "",
+      "arxiv": ""
+    },
+    "bibtex": "@inproceedings{zhang2024rl,\n  title={Reinforcement Learning-Based Decision-Making for Renal Replacement Therapy in ICU-acquired AKI Patients},\n  author={Zhang, H and Xiong, M and Shi, T and Liu, W and Xu, H and Zhao, H and Kong, G},\n  booktitle={ACM KDD Workshop on AI for Decision Support in Healthcare},\n  year={2024}\n}"
   },
   {
     "id": "pub-2023-01",
-    "title": "Alert Fatigue in Clinical Decision Support: A Scoping Review",
-    "authors": ["Your Name", "Co-Author B"],
-    "venue": "Applied Clinical Informatics",
+    "title": "Soft Vector Quantization for Non-Parallel Any-to-Many Voice Conversion",
+    "authors": ["Xiong M", "Wu Z"],
+    "venue": "Speech and Language Processing Technology Conference",
     "year": 2023,
-    "type": "journal",
-    "abstract": "We conducted a scoping review of alert fatigue in CDS systems, synthesizing evidence on override rates, contextual factors, and mitigation strategies. We identify gaps in prospective evaluation and propose a framework for studying fatigue in deployment contexts.",
+    "type": "conference",
+    "abstract": "SoftVQ: a vector quantization framework for non-parallel many-to-many voice conversion, achieving improvements of 76.3 points in perceived audio quality and 1.1 points in speaker similarity in ABX evaluations. Built as part of work at the Human Language Technology Laboratory, CUHK Shenzhen.",
     "links": {
       "pdf": "",
       "doi": "",
       "arxiv": ""
     },
-    "bibtex": "@article{yourname2023fatigue,\n  title={Alert Fatigue in Clinical Decision Support: A Scoping Review},\n  author={Your Name and Co-Author B},\n  journal={Applied Clinical Informatics},\n  year={2023}\n}"
-  },
-  {
-    "id": "pub-2023-02",
-    "title": "Poster: Threshold Selection Under Asymmetric Costs in Sepsis Prediction",
-    "authors": ["Your Name", "Mentor Name"],
-    "venue": "AMIA Annual Symposium (Poster)",
-    "year": 2023,
-    "type": "poster",
-    "abstract": "We examine how standard threshold selection methods perform when false negatives carry substantially higher clinical cost than false positives, using a sepsis prediction dataset. Results motivate cost-sensitive threshold selection as a default for clinical ML models.",
-    "links": {
-      "pdf": "",
-      "doi": "",
-      "arxiv": ""
-    },
-    "bibtex": "@misc{yourname2023threshold,\n  title={Threshold Selection Under Asymmetric Costs in Sepsis Prediction},\n  author={Your Name and Mentor Name},\n  howpublished={AMIA Annual Symposium Poster},\n  year={2023}\n}"
+    "bibtex": "@inproceedings{xiong2023softvq,\n  title={Soft Vector Quantization for Non-Parallel Any-to-Many Voice Conversion},\n  author={Xiong, M and Wu, Z},\n  booktitle={Speech and Language Processing Technology Conference},\n  year={2023}\n}"
   }
 ]

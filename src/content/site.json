@@ -1,23 +1,23 @@
 {
-  "name": "Your Name",
-  "nameShort": "YN",
-  "tagline": "MS→PhD student in biomedical informatics and clinical decision-making.",
-  "intro": "I'm interested in how clinical language, real-world data, and decision theory intersect — and what that means for building systems that are actually useful at the point of care. I'm exploring methods at the edges of NLP, causal inference, and clinical informatics.",
+  "name": "Minqi (Christelle) Xiong",
+  "nameShort": "CX",
+  "tagline": "MS Health Sciences Informatics · Johns Hopkins · Clinical AI & Real-World Evidence",
+  "intro": "I'm interested in how we measure disease — not just detect it. My work spans real-world EHR data, clinical NLP, and the conceptual foundations of disease severity. I'm building toward research that is methodologically rigorous, reproducible, and honest about the gap between what data can tell us and what clinicians actually need to know.",
   "now": [
-    "Preparing PhD applications in biomedical informatics",
-    "Finishing my MS thesis on clinical note summarization",
-    "Reading about causal inference and treatment effect heterogeneity",
-    "Thinking about what it means for a model to be clinically useful, not just accurate"
+    "MS thesis: developing a conceptual framework for disease severity at Johns Hopkins",
+    "Building AgentDose — NLP + LLM pipelines for scalable steroid dose calculation from OMOP CDM (nominated, OHDSI 2025 Best Community Contribution)",
+    "Actively working an OHDSI network study on DMARDs adverse events of Myositis patients across multi-site OMOP databases",
+    "TA for Health Sciences Informatics Research Methods and OMOP observational research courses"
   ],
   "about": {
-    "bio": "I came to biomedical informatics from a background in [your prior field], drawn by a persistent question: why is so much clinical knowledge locked inside unstructured text, and what would it mean to make it computationally legible without losing its nuance? That question has led me to NLP, real-world evidence, and the messy boundary between measurement and meaning in medicine.",
+    "bio": "I came to biomedical informatics from a data science background at the Chinese University of Hong Kong — drawn by a question I couldn't stop returning to: how do we represent disease computationally without flattening the complexity that makes it clinically meaningful? That question led me to Johns Hopkins School of Medicine, where I'm completing my MS in Health Sciences Informatics. My work spans real-world EHR and claims data, clinical NLP and LLM applications, and multi-site network studies through OHDSI. My current thesis develops a unified conceptual framework for disease severity — a construct that pervades clinical decision-making but has rarely been formalized. My methods are quantitative (sometimes qualitative); my questions are fundamentally about measurement and meaning.",
     "values": [
-      "Rigor that stays honest about its own limits",
-      "Tools that serve clinicians, not just benchmarks",
-      "Curiosity as a sustained practice, not a credential",
-      "Clarity over cleverness"
+      "Reproducibility as a first-class research value, not an afterthought",
+      "Health equity as a lens on every methodological choice",
+      "Rigor that stays honest about what observational data can and cannot show",
+      "Open science — open code, open pipelines, shared infrastructure"
     ],
-    "outside": "Outside of research, I think about [hobby / interest], read [genre], and try to keep a clear head through [activity]. I believe that taking care of yourself is part of taking your work seriously.",
-    "philosophy": "I want to build things that are genuinely useful — that reduce friction for people trying to do good work in difficult circumstances. I'm building toward research that is methodologically careful, clinically grounded, and honest about what we don't yet know."
+    "outside": "Outside of research, I care a lot about teaching and mentorship — I've advised 27 students on graduate applications and academic career planning, and I find that explaining ideas clearly sharpens my own thinking. I'm also drawn to the startup world, having co-founded a healthcare tech company and joined the founding team of an LLM-based project management platform. I believe staying close to real-world constraints — commercial, clinical, ethical — keeps research honest.",
+    "philosophy": "I want to build infrastructure that other researchers can stand on — open platforms, validated phenotyping pipelines, reproducible frameworks for evidence synthesis. I'm building toward researcher that takes seriously both the computational and the conceptual sides of clinical informatics: not only how to model disease trajectory, but also what we mean when we say a disease is severe, a finding is real, or an algorithm is fair."
   }
 }

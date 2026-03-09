@@ -1,42 +1,42 @@
 [
   {
-    "id": "clinical-nlp",
-    "title": "Clinical NLP & Documentation",
-    "description": "I'm interested in how clinical language encodes knowledge that structured data misses — diagnoses implied but not coded, reasoning embedded in free text, uncertainty expressed through hedging and qualification. I'm exploring methods that can surface this latent structure while respecting its clinical context.",
-    "methods": ["Information extraction", "Span classification", "Summarization", "LLM evaluation"],
-    "whyItMatters": "Clinical notes are the most complete record of a patient encounter, but they remain largely inaccessible to computational systems. Methods that bridge unstructured documentation and structured inference could change what's possible in care delivery and research.",
-    "icon": "nlp"
-  },
-  {
-    "id": "decision-support",
-    "title": "Clinical Decision Support",
-    "description": "I'm exploring the design and evaluation of decision support tools that are genuinely useful in practice — not just accurate on held-out test sets. This means thinking carefully about how clinicians interact with recommendations, what kinds of errors matter most, and when a tool should remain silent.",
-    "methods": ["Workflow integration", "Human-AI teaming", "Alert design", "Prospective evaluation"],
-    "whyItMatters": "Most clinical decision support research optimizes for metrics that don't map cleanly to clinical utility. I'm interested in the gap between model performance and real-world impact — and what it would take to close it.",
+    "id": "disease-severity",
+    "title": "Disease Severity: Conceptualization & Computation",
+    "description": "My MS thesis is building a unified conceptual and computational framework for disease severity — a construct that is everywhere in clinical medicine but rarely defined rigorously. I'm conducting a PRISMA-ScR scoping review to synthesize how severity is conceptualized across clinical domains, then formalizing that into a multilevel, multidimensional model that can represent dynamic severity trajectories across disease stages and patient contexts.",
+    "methods": ["Scoping review (PRISMA-ScR)", "Conceptual modeling", "Temporal state-transition models", "Ontology design"],
+    "whyItMatters": "Every clinical decision — treatment intensity, escalation, prognosis — implicitly involves severity. Yet severity scores like APACHE-II or SOFA are predictive instruments that have been reified into measures of disease state. Without a clear conceptual foundation, computational representations of severity encode hidden assumptions that downstream models inherit uncritically.",
     "icon": "decision"
   },
   {
     "id": "real-world-evidence",
-    "title": "Real-World Evidence & Phenotyping",
-    "description": "I'm building toward expertise in EHR-based research — the messy, laborious, and underappreciated work of defining cohorts, validating phenotypes, and reasoning carefully about confounding. I'm interested in how choices made early in data preparation propagate into downstream conclusions.",
-    "methods": ["EHR phenotyping", "Cohort construction", "ICD/NLP hybrid methods", "Data quality assessment"],
-    "whyItMatters": "RWE offers the scale that randomized trials can't provide, but only if the underlying data infrastructure is sound. I want to understand what it takes to do this work rigorously — and where rigor breaks down under practical constraints.",
+    "title": "Real-World Evidence & EHR Data Infrastructure",
+    "description": "I'm building expertise in the full stack of real-world evidence research — from processing multi-state administrative claims databases (HCUP, 48M+ records) to developing computable phenotypes and cohort discovery pipelines in OMOP CDM using OHDSI ATLAS. I'm interested in how choices made early in data preparation — cohort definitions, ICD filtering, claims-EHR concordance — propagate into downstream conclusions.",
+    "methods": ["OMOP CDM / OHDSI ATLAS", "Administrative claims (HCUP)", "Computable phenotyping", "Multi-site distributed analysis", "Concordance and data quality analysis"],
+    "whyItMatters": "I've studied diagnostic concordance between administrative claims and EHR systems across 17M patients at 56 healthcare organizations (JAMIA Open, in-press). The gap is substantial and systematic. RWE can only be trusted when the data infrastructure it rests on is understood — and that understanding requires careful empirical work, not just methods papers.",
     "icon": "data"
   },
   {
-    "id": "evaluation",
-    "title": "Evaluation, Tradeoffs & Clinical Validity",
-    "description": "I'm interested in how we should evaluate AI/ML systems in clinical contexts — what the right metrics are, how to reason about precision-recall tradeoffs when the costs of errors are asymmetric, and what 'external validity' actually means for a model intended for real-world deployment.",
-    "methods": ["Decision curve analysis", "Calibration", "Subgroup analysis", "Implementation science frameworks"],
-    "whyItMatters": "A model that performs well on average can still cause systematic harm to subgroups. Evaluation frameworks that ignore deployment context or cost asymmetry give false confidence. I'm exploring what more honest evaluation would look like.",
+    "id": "clinical-nlp",
+    "title": "Clinical NLP & LLM Applications",
+    "description": "I'm exploring how NLP and large language models can extract clinically actionable structure from unstructured healthcare text — at scale and reliably. My current focus is AgentDose: a framework combining rule-based NLP parsers with LLM agents to extract steroid dosing instructions from prescription signatures in OMOP CDM EHR databases. This work addresses a real gap: corticosteroid exposure is critical to pharmacoepidemiology, but dosing information is buried in free-text fields that structured fields don't capture.",
+    "methods": ["NLP pipeline development", "LLM agent evaluation", "OMOP CDM integration", "Information extraction", "R package development"],
+    "whyItMatters": "Medication dosing information in EHR data is largely inaccessible to computational research — structured fields capture what was ordered, not what was actually prescribed, titrated, or tapered. AgentDose (nominated for OHDSI 2025 Best Community Contribution) aims to make steroid exposure estimation reproducible and scalable across distributed OHDSI partner databases.",
+    "icon": "nlp"
+  },
+  {
+    "id": "health-equity",
+    "title": "Health Equity in Clinical Data & Algorithms",
+    "description": "I'm interested in how structural inequities in the healthcare system are encoded in — and sometimes amplified by — clinical data and the models trained on it. My work on racial disparities in post-hysterectomy emergency department visits (Int J Gynaecol Obstet, in-press) identified systematic differences in 30-day ED utilization across racial groups using a multi-state HCUP cohort of ~200,000 cases. I'm also contributing to work on SDoH data in suicide prediction models.",
+    "methods": ["Multivariable logistic regression", "Sensitivity analysis", "Subgroup analysis", "Social determinants of health (SDoH)", "Retrospective cohort design"],
+    "whyItMatters": "Health equity is not a separate topic from methods — it is a lens that should be applied to every methodological choice: how cohorts are defined, what outcomes are measured, which confounders are adjusted for, and how model performance is reported. Disparities that are invisible in aggregate statistics can drive systematic harm at the level of individual patients.",
     "icon": "eval"
   },
   {
-    "id": "causality",
-    "title": "Causal Inference in Clinical Data",
-    "description": "I'm exploring how causal inference methods — potential outcomes, DAGs, sensitivity analysis — can help us reason more carefully about observational clinical data. I'm interested in what assumptions are required, when they're plausible, and how to communicate uncertainty when they're not.",
-    "methods": ["Propensity scoring", "Instrumental variables", "Directed acyclic graphs", "Sensitivity analysis"],
-    "whyItMatters": "Clinical decisions are inherently causal, but most prediction models are correlational. Closing that gap requires both methodological care and honest engagement with the limits of observational data.",
+    "id": "causal-predictive",
+    "title": "Causal Inference & Predictive Modeling",
+    "description": "I'm developing fluency in both predictive and causal modeling for clinical data — and in being explicit about which mode is appropriate for a given question. My work includes survival analysis, comparative effectiveness evaluation of immunosuppressant therapies, and RL-based decision-making for renal replacement therapy in ICU-acquired AKI. I'm also building toward causal approaches for understanding pregnancy complications in real-world healthcare data.",
+    "methods": ["Survival analysis", "Logistic regression", "Reinforcement learning", "Causal inference", "Comparative effectiveness", "Pregnancy episode identification"],
+    "whyItMatters": "Most clinical prediction models are correlational, but clinical decisions are inherently causal. The distinction matters enormously for deployment: a model that predicts well may guide the wrong intervention if the association it captures is confounded. I'm exploring how to make that distinction explicit — and how to reason carefully about when causal claims are warranted.",
     "icon": "causal"
   }
 ]

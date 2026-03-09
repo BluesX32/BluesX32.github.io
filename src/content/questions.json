@@ -1,74 +1,74 @@
 [
   {
     "id": "q1",
-    "question": "How do we define disease?",
-    "tags": ["Disease", "Philosophy", "Measurement"],
-    "note": "Is disease a biological fact, a social construct, or a deviation from a statistical norm? Does the answer change across conditions — is heart failure more 'real' than depression? The definition shapes what counts as a case, which in turn shapes every downstream inference."
+    "question": "When does a severity score become a measure of disease, rather than a predictor of outcome?",
+    "tags": ["Severity", "Measurement", "Disease"],
+    "note": "SOFA, APACHE-II, and Child-Pugh were designed to predict outcomes — mortality, ICU resource use, transplant priority. Over time, they became proxies for 'how sick the patient is.' That shift from predictive instrument to disease representation has consequences: we optimize for the score, not the state it was meant to capture. My thesis lives in this gap."
   },
   {
     "id": "q2",
-    "question": "What is true health?",
-    "tags": ["Health", "Philosophy", "Measurement"],
-    "note": "If disease is the absence of health, we haven't said much. Boorse's biostatistical theory, Nordenfelt's welfare theory, and the WHO definition each give different answers — with different implications for what systems should optimize."
+    "question": "Is disease severity one thing or many things?",
+    "tags": ["Severity", "Disease", "Measurement"],
+    "note": "A patient with stage IV cancer can have low symptom burden and high functional status. A patient with 'mild' COPD can be functionally disabled. Severity as a biomarker differs from severity as functional impairment, which differs from severity as trajectory. Do we want a single number — or an honest representation of what we actually mean?"
   },
   {
     "id": "q3",
-    "question": "When does severity become a construct rather than an outcome?",
-    "tags": ["Severity", "Measurement", "Disease"],
-    "note": "Severity scores like APACHE-II or SOFA are predictive instruments that have been reified into measures of disease state. At what point does the map become the territory? And what do we lose when we forget the difference?"
+    "question": "How do we define disease?",
+    "tags": ["Disease", "Philosophy", "Measurement"],
+    "note": "Is disease a biological fact, a social construct, or a deviation from a statistical norm? Does the answer change across conditions — is heart failure more 'real' than depression? The definition shapes what counts as a case, which in turn shapes every downstream inference. My work on disease severity starts with this question."
   },
   {
     "id": "q4",
-    "question": "What makes a clinical decision good?",
-    "tags": ["Decision-making", "Ethics", "Causality"],
-    "note": "Is a good decision one that follows the evidence? One that produces a good outcome? One that reflects the patient's values? These can conflict. The right answer probably depends on who is asking and why — which is itself a kind of answer."
+    "question": "What does it mean for real-world evidence to be trustworthy?",
+    "tags": ["Causality", "Measurement", "Decision-making"],
+    "note": "I've seen, empirically, how large the gap is between administrative claims and EHR records for the same patients — across 17 million patients at 56 healthcare organizations. If the data foundation is unreliable, the RWE built on it is unreliable. Trustworthiness isn't just about study design; it starts with data quality, and data quality is harder to establish than methods papers suggest."
   },
   {
     "id": "q5",
-    "question": "How should we evaluate usefulness, not just performance?",
-    "tags": ["Measurement", "Decision-making", "Ethics"],
-    "note": "AUROC and F1 are easy to compute and easy to compare, but they don't tell you whether a model would help anyone make a better decision. What would a framework for evaluating clinical usefulness look like — and is it even possible to specify in advance?"
+    "question": "Are racial disparities in healthcare data a feature or a bug?",
+    "tags": ["Health Equity", "Ethics", "Measurement"],
+    "note": "Administrative claims data faithfully records what actually happened — including the disparities baked into access, care patterns, and documentation. In one sense, this is a feature: the data is honest. In another, analyzing disparities without questioning the data-generating process conflates 'what was documented' with 'what is true.' Both matter. Neither is sufficient alone."
   },
   {
     "id": "q6",
-    "question": "What kind of evidence deserves trust in practice?",
-    "tags": ["Causality", "Ethics", "Decision-making"],
-    "note": "RCT evidence is credible but often narrow. RWE is broad but confounded. Expert consensus is accessible but fallible. In practice, clinicians synthesize all of these — and so should decision support systems. But what's the right weighting function, and can it be made explicit?"
+    "question": "When should an LLM be trusted to extract clinical information?",
+    "tags": ["Decision-making", "Measurement", "Philosophy"],
+    "note": "For AgentDose, I use LLM agents for cases where rule-based parsers fail — ambiguous, non-standard, or poorly formed prescription signatures. The LLM is often right. But 'often right' is not the same as 'reliably right,' and in clinical contexts, the distribution of errors matters as much as the average performance. I keep asking: what failure modes am I not evaluating?"
   },
   {
     "id": "q7",
-    "question": "Is a model fair if it performs equally across groups on average?",
-    "tags": ["Ethics", "Measurement", "Disease"],
-    "note": "Equal average performance can mask systematic differences in where errors occur. A model that is miscalibrated in a specific subgroup may cause harm precisely in the patients who already face the most barriers to accurate diagnosis and appropriate care."
+    "question": "What is lost when we standardize clinical data to a common model?",
+    "tags": ["Measurement", "Disease", "Philosophy"],
+    "note": "OMOP CDM is enormously powerful — it makes multi-site studies possible that wouldn't otherwise be. But standardization has costs: nuance in documentation, site-specific coding practices, and clinical context that resists formalization. Every ETL pipeline makes choices about what to map and what to discard. Those choices are invisible to most downstream analysts."
   },
   {
     "id": "q8",
-    "question": "When is uncertainty clinically legible?",
-    "tags": ["Decision-making", "Measurement", "Philosophy"],
-    "note": "Quantified uncertainty — confidence intervals, prediction intervals, calibration curves — is technically precise but may be meaningless to a clinician under time pressure. What forms of uncertainty communication actually change decisions for the better?"
+    "question": "Is reproducibility a methodological value or an ethical one?",
+    "tags": ["Ethics", "Measurement", "Causality"],
+    "note": "I build open-source tools (AgentDose, evidence synthesis platforms) partly because I think reproducibility is methodologically necessary — results that can't be reproduced can't be trusted. But I also think it's an ethical obligation: clinical research that influences care decisions should be accountable, and accountability requires transparency. These two framings usually agree; sometimes they don't."
   },
   {
     "id": "q9",
-    "question": "What is the relationship between explanation and trust?",
-    "tags": ["Ethics", "Decision-making", "Philosophy"],
-    "note": "Explainability research assumes that explanations build appropriate trust. But explanations can also build inappropriate trust — making a model seem more interpretable than it is. Under what conditions does explanation help, and when does it mislead?"
+    "question": "What makes a clinical decision good?",
+    "tags": ["Decision-making", "Ethics", "Causality"],
+    "note": "Is a good decision one that follows the evidence? One that produces a good outcome? One that reflects the patient's values? These can conflict. My work on GlioNet (CDS for glioblastoma) forced me to think carefully about what a 'useful' prediction actually enables at the bedside — and the gap between a high-AUROC model and a clinically useful tool is real and underappreciated."
   },
   {
     "id": "q10",
-    "question": "Can a model be wrong and still be useful?",
-    "tags": ["Measurement", "Decision-making", "Causality"],
-    "note": "A map is always wrong — it omits information and distorts scale. But some maps are useful precisely because of what they leave out. The same may be true of clinical models. The question is whether we know what has been omitted and whether that matters for the task at hand."
+    "question": "Can a network study replace a randomized trial for rare diseases?",
+    "tags": ["Causality", "Decision-making", "Measurement"],
+    "note": "For dermatomyositis — prevalence ~10/100,000 — an RCT is practically impossible. OHDSI network studies offer statistical power through aggregation, but they can't randomize, can't control unmeasured confounding, and are constrained by how consistently the disease was diagnosed and documented across sites. The honest answer: network studies can raise confidence, but they can't answer the causal question an RCT would."
   },
   {
     "id": "q11",
-    "question": "How do we prevent the benchmark from becoming the goal?",
-    "tags": ["Measurement", "Ethics", "Decision-making"],
-    "note": "Goodhart's Law: when a measure becomes a target, it ceases to be a good measure. In clinical AI, optimizing for AUROC or ROUGE can produce models that score well and help no one. What institutional and methodological structures might resist this pressure?"
+    "question": "What do we owe to patients whose data trained the model?",
+    "tags": ["Ethics", "Disease", "Philosophy"],
+    "note": "Clinical AI systems are trained on patient data — generated in moments of vulnerability, often without explicit consent for secondary research use. Working with HCUP, Optum Labs, and multi-site EHR data makes this concrete for me. The usual answer is that benefit to future patients justifies current use. I keep wondering whether that justification is complete, or whether we've simply normalized a practice we haven't examined carefully enough."
   },
   {
     "id": "q12",
-    "question": "What do we owe to patients whose data trained the model?",
-    "tags": ["Ethics", "Disease", "Philosophy"],
-    "note": "Clinical AI systems are trained on patient data — data generated in moments of vulnerability, often without explicit consent for research purposes. What obligations does this create? Is benefit to future patients a sufficient justification, or is something else required?"
+    "question": "Is health equity a constraint on good models, or the definition of them?",
+    "tags": ["Health Equity", "Ethics", "Measurement"],
+    "note": "One framing: build the best model you can, then audit for disparities and correct. Another framing: a model that performs unequally across demographic groups is not, by definition, a good model — regardless of its aggregate performance. My work on racial disparities in ED utilization inclines me toward the second framing. Equity is not a post-hoc check; it is a design requirement."
   }
 ]
