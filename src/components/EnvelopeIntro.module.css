@@ -8,7 +8,7 @@
   justify-content: center;
   background: #f4f1eb;
   cursor: pointer;
-  transition: opacity 350ms ease, transform 350ms ease;
+  transition: opacity 3000ms ease, transform 3000ms ease;
   overflow: hidden;
 }
 
@@ -183,6 +183,25 @@
   background: #c9bfa8;
   border-radius: 1px;
   opacity: 0.6;
+}
+
+/* Epigraph — printed on envelope body, centered between flap crease and bottom folds */
+.epigraph {
+  position: absolute;
+  top: 64%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 13px;
+  color: #7a6f5e;
+  letter-spacing: 0.05em;
+  font-weight: 400;
+  white-space: nowrap;
+  font-style: italic;
+  pointer-events: none;
+  font-family: var(--font-body);
+  opacity: 0.85;
+  z-index: 1;
+  margin: 0;
 }
 
 /* Hint text */

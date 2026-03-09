@@ -180,6 +180,28 @@
     ]
   },
   {
+    "id": "agent-reproducibility",
+    "title": "LLM Agents for Research Reproducibility",
+    "subtitle": "Multi-agent GPT-4o system autonomously replicates Alzheimer's Disease findings from NACC data · 5 published studies, 35 assertions",
+    "status": "Under Review · Preprint Available",
+    "tags": ["LLM Agents", "Research Reproducibility", "Alzheimer's Disease", "Clinical NLP", "Autogen", "Biomedical AI"],
+    "problem": "Science is in a reproducibility crisis — an estimated 75–90% of published studies cannot be independently replicated. Within biomedical informatics, reproducing a prior study requires reading the manuscript, acquiring the dataset, standing up a compute environment, and often writing code from scratch. This is so time- and resource-intensive that large-scale audit of the scientific literature is effectively impossible. We asked: can LLM-based autonomous agents automate this process?",
+    "approach": "We used the NACC Quick Access Uniform Dataset (UDS v3), a public longitudinal dataset covering 40,000+ Alzheimer's Disease patients across 35 ADRCs. From 328 papers citing the NACC v3 schema update, we selected 5 highly-cited, reproducible studies. We built a five-agent team — Planner, Engineer, Scientist, Critic, and Executor — using Microsoft Autogen v2 and GPT-4o. Each agent received only the abstract and methods section of the original paper plus curated NACC variable definitions. The team autonomously generated and executed Python code to reproduce abstract-reported findings, with minimal human-in-the-loop prompting at key decision points.",
+    "impact": "Agents reproduced approximately 53% of key findings per study on average (25/35 assertions, 71.4%, across all studies). Boolean directional findings (racial disparities, symptom associations) were reliably reproduced; numeric estimates requiring domain-specific statistical methods (demographically-corrected regression, network bootstrapping) frequently diverged. Code execution failed in 47% of attempts but self-corrected in all cases. The work demonstrates both the promise of LLM agents as scalable reproducibility auditors and the current bottlenecks: missing method detail, domain-specific statistics, and complex cohort logic. All code and agent transcripts are publicly available.",
+    "myRole": "Co-first author with equal contribution (Nicolas Dobbins, PhD). Led study selection and eligibility criteria design, conducted evaluation of agent-generated outputs across all 5 studies, drove statistical and process replication assessment, and co-wrote the manuscript. Co-authors: Kristine Lan, MS; Meliha Yetisgen, PhD. Affiliated with Biomedical Informatics & Data Science, Johns Hopkins University.",
+    "links": [
+      {"label": "Code & Agent Transcripts on GitHub", "url": "https://github.com/ndobb/nacc_paper_llm_reproducer", "icon": "github"}
+    ],
+    "tools": ["Python", "GPT-4o", "Autogen v2", "NACC UDS v3", "pandas", "scipy", "networkx", "Jupyter"],
+    "pipeline": [
+      {"id": "ar1", "label": "Study Selection", "description": "328 papers citing the NACC UDS v3 update screened. Filtered to 101 with ≥10 citations, then to 5 clinical studies fully reproducible using only the Quick Access dataset. Criteria: no additional modules, no external datasets, full text accessible."},
+      {"id": "ar2", "label": "Prompt Construction", "description": "For each study: abstract and methods section extracted as plain text. 15–30 NACC data dictionary variables judged relevant to the study's analytic pipeline were manually curated. Dataset-level instructions (date handling, missing values, cohort inclusion/exclusion logic) appended. No additional information provided."},
+      {"id": "ar3", "label": "Multi-Agent Execution", "description": "Five-agent team (Planner, Engineer, Scientist, Critic, Executor) orchestrated by an Autogen manager. The Engineer wrote iterative Python code; the Executor ran it; the Critic and Scientist reviewed outputs. Code execution failed in 26/55 attempts (47%) and self-corrected in all cases. Mean turn count: 35.6 per study."},
+      {"id": "ar4", "label": "Assertion Evaluation", "description": "Key findings manually extracted from each abstract as individual assertions (numeric or boolean). Agent outputs evaluated for alignment: numeric values within ±1 unit considered reproduced; boolean assertions matched if direction agreed. Evaluated across three dimensions: assertion-level accuracy, statistical method consistency, and workflow process fidelity."},
+      {"id": "ar5", "label": "Error Analysis", "description": "Systematic review of mismatches revealed recurring failure modes: omission of demographic covariates in regression, wrong reference group choice, domain-specific methods (network bootstrapping, SRB z-scores) skipped or approximated, and complex temporal cohort logic not implemented. Studies with explicit, simple analytic descriptions converged faster and reproduced more accurately."}
+    ]
+  },
+  {
     "id": "tradeoff-explorer",
     "title": "Racial Disparities in Post-Hysterectomy ED Utilization",
     "subtitle": "State-based retrospective cohort study using HCUP data · Florida & Maryland 2017–2021",

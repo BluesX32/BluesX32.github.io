@@ -7,6 +7,7 @@ import DecisionPathwayDemo from '@/components/demos/DecisionPathwayDemo'
 import CohortBuilderDemo from '@/components/demos/CohortBuilderDemo'
 import TradeoffExplorerDemo from '@/components/demos/TradeoffExplorerDemo'
 import ClaimsEHRDemo from '@/components/demos/ClaimsEHRDemo'
+import AgentReproDemo from '@/components/demos/AgentReproDemo'
 import styles from './Projects.module.css'
 
 function GitHubIcon() {
@@ -27,6 +28,8 @@ function getDemoComponent(project: Project) {
       return <TradeoffExplorerDemo />
     case 'claims-ehr-gap':
       return <ClaimsEHRDemo />
+    case 'agent-reproducibility':
+      return <AgentReproDemo />
     default:
       return null
   }

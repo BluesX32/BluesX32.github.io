@@ -20,7 +20,7 @@ export default function EnvelopeIntro({ onComplete }: EnvelopeIntroProps) {
     const delay = reducedMotion ? 100 : 900
     setTimeout(() => {
       setPhase('done')
-      setTimeout(onComplete, reducedMotion ? 50 : 300)
+      setTimeout(onComplete, reducedMotion ? 50 : 3000)
     }, delay)
   }, [phase, reducedMotion, onComplete])
 
@@ -64,6 +64,11 @@ export default function EnvelopeIntro({ onComplete }: EnvelopeIntroProps) {
         <div className={styles.foldLeft} />
         <div className={styles.foldRight} />
         <div className={styles.foldBottom} />
+
+        {/* Epigraph printed on envelope body */}
+        <p className={styles.epigraph} aria-hidden="true">
+          You cannot predict what you cannot measure.
+        </p>
 
         {/* Flap (top) */}
         <div className={`${styles.flap} ${phase === 'opening' ? styles.flapOpen : ''}`}>
