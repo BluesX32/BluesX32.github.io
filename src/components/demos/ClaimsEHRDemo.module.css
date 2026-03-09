@@ -1,0 +1,243 @@
+.demo {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+
+.demoHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-surface-alt);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-wrap: wrap;
+}
+
+.headerTitle {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.headerNote {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  margin-left: auto;
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  min-height: 280px;
+}
+
+/* Chart panel */
+.chartPanel {
+  padding: var(--space-4) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  border-right: 1px solid var(--border-subtle);
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.legendLabel {
+  font-size: 10px;
+  color: var(--text-tertiary);
+  margin-right: var(--space-2);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.dotClaims { background: var(--accent-primary); }
+.dotBoth   { background: var(--color-blue-300, #93c5fd); }
+.dotEhr    { background: var(--color-gray-300, #d1d5db); }
+
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.barRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  padding: 3px var(--space-2);
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+  text-align: left;
+  width: 100%;
+}
+
+.barRow:hover {
+  background: var(--bg-surface-alt);
+  border-color: var(--border-medium);
+}
+
+.barRowActive {
+  background: var(--bg-surface-alt);
+  border-color: var(--accent-primary) !important;
+}
+
+.yearLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-tertiary);
+  width: 36px;
+  flex-shrink: 0;
+}
+
+.stackWrap {
+  flex: 1;
+  height: 10px;
+  display: flex;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.seg {
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.segClaims { background: var(--accent-primary); }
+.segBoth   { background: var(--color-blue-300, #93c5fd); }
+.segEhr    { background: var(--color-gray-300, #d1d5db); }
+
+.pctLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-tertiary);
+  width: 28px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.chartNote {
+  font-size: 9px;
+  color: var(--text-tertiary);
+  margin-top: var(--space-1);
+  font-style: italic;
+}
+
+/* Detail panel */
+.detailPanel {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.yearBadge {
+  font-family: var(--font-heading);
+  font-size: var(--text-3xl);
+  font-weight: 300;
+  color: var(--accent-primary);
+  letter-spacing: var(--tracking-tight);
+}
+
+.statGrid {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statVal {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  color: var(--text-primary);
+}
+
+.statLabel {
+  font-size: 10px;
+  color: var(--text-tertiary);
+}
+
+.breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-3);
+}
+
+.bkRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.bkDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.bkLabel {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.bkVal {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.insight {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-3);
+}
+
+.insight p {
+  margin: 0;
+}
+
+.sourceNote {
+  font-size: 9px;
+  color: var(--text-tertiary);
+  font-style: italic;
+  margin-top: auto;
+}
+
+@media (max-width: 540px) {
+  .body {
+    grid-template-columns: 1fr;
+  }
+  .chartPanel {
+    border-right: none;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .headerNote { display: none; }
+}

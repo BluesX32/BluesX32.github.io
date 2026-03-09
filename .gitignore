@@ -1,0 +1,5 @@
+# Environment — never commit secrets
+.env
+
+# Python
+additional_info/

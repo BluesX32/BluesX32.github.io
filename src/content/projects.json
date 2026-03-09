@@ -161,6 +161,25 @@
     }
   },
   {
+    "id": "claims-ehr-gap",
+    "title": "Claims–EHR Diagnostic Synergy",
+    "subtitle": "Completeness of diagnosis coding across 17 million patients and 56 healthcare organizations, 2010–2022",
+    "status": "Under Review · Manuscript",
+    "tags": ["Data Quality", "Administrative Claims", "EHR", "Health Informatics", "Comorbidity"],
+    "problem": "Electronic health records have achieved near-universal adoption in U.S. hospitals, yet their completeness as a source of diagnostic information remains poorly characterized at scale. Clinicians, health systems, and value-based payers increasingly rely on EHR-derived diagnoses for risk stratification, comorbidity measurement, and quality reporting — but if EHRs systematically miss diagnoses that appear in administrative claims, those analyses are quietly biased. Prior comparisons were limited to single health systems or narrow disease areas; no large, multi-institutional, longitudinal characterization of the EHR-claims diagnostic gap existed.",
+    "approach": "Using the Optum Labs Data Warehouse (OLDW), we linked de-identified claims and EHR data for ~17 million patient-years across 56 healthcare organizations (2010–2022). For each calendar year and each AHRQ Clinical Classification Software (CCS) diagnostic group, we computed the proportions of patient-years with diagnoses recorded exclusively in claims, exclusively in EHRs, or in both. Agreement metrics (sensitivity, specificity, Cohen's κ, PABAK) were calculated treating claims as the reference standard. Comorbidity burden (chronic condition counts and Charlson Comorbidity Index) was derived separately from each source. Linear regression modeled annual trends in the EHR-claims diagnostic gap across the full study period and the pre-COVID years (2010–2019).",
+    "impact": "Across all years, ~45% of patient-diagnoses appeared only in claims and were absent from EHRs. EHR completeness improved ~10% from 2010 to 2019 (claims-only share declined from 51% to 41%), but reversed sharply after 2020. Claims-derived comorbidity was consistently higher: mean chronic condition count 4.42 vs. 2.04 in EHRs; mean CCI 0.74 vs. 0.39. The EHR-claims gap in CCI narrowed significantly pre-2020 but did not improve after the pandemic onset. These findings directly inform how health systems, payers, and researchers should weight EHR versus claims data for risk adjustment and population health analytics.",
+    "myRole": "First and corresponding author. Designed and executed the full analysis: sample identification, CCS-based diagnosis linkage, agreement metric computation, comorbidity derivation, trend modeling, and manuscript writing. Co-authors: Harlan Pittell, PhD; Christopher Kitchen, MS; Elyse Lasser, DrPH; Hadi Kharrazi, MD, PhD (PI). Division of Biomedical Informatics and Data Science, Johns Hopkins.",
+    "tools": ["R", "AHRQ CCS (Clinical Classification Software)", "Optum Labs Data Warehouse (OLDW)", "Charlson Comorbidity Index", "Cohen's κ / PABAK", "Linear regression", "ICD-9 / ICD-10"],
+    "pipeline": [
+      {"id": "ce1", "label": "Sample Identification", "description": "Enrollees with both claims and EHR data identified from OLDW (2010–2022). Patients with coverage gaps, conflicting demographics, or boundary-age Medicare overlap excluded. Final cohort: 16,991,756 patient-years across 56 healthcare organizations."},
+      {"id": "ce2", "label": "Diagnosis Grouping", "description": "All structured diagnosis codes (ICD-9 and ICD-10) from both sources collapsed into AHRQ CCS groups. Provisional, rule-out, unconfirmed, and NLP-derived diagnoses excluded to ensure comparability. Multiple same-condition occurrences within a year-source pair collapsed to one."},
+      {"id": "ce3", "label": "Source Classification", "description": "For each patient-year and CCS category, diagnoses classified as: claims-only, EHR-only, or both. Annual proportions computed and visualized as stacked bars stratified by CCS group and by healthcare organization."},
+      {"id": "ce4", "label": "Agreement Metrics", "description": "Claims treated as reference standard; EHR as index test. Sensitivity, specificity, Cohen's κ, and PABAK computed for each of 18 high-level and 88 mid-level CCS categories. Moderate-to-substantial agreement overall (κ = 0.60, PABAK = 0.65), with wide variation by category."},
+      {"id": "ce5", "label": "Comorbidity & Trends", "description": "Charlson Comorbidity Index and chronic condition counts derived separately from claims and EHR. Linear regression (Δt = β0 + β1(t − 2010)) modeled annual changes in the diagnostic gap. Pre-COVID (2010–2019) and full-period (2010–2022) trends estimated separately to isolate pandemic disruption."}
+    ]
+  },
+  {
     "id": "tradeoff-explorer",
     "title": "Racial Disparities in Post-Hysterectomy ED Utilization",
     "subtitle": "State-based retrospective cohort study using HCUP data · Florida & Maryland 2017–2021",
