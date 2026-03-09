@@ -14,7 +14,7 @@ export default function DecisionPathwayDemo({ project }: DecisionPathwayDemoProp
   return (
     <div className={styles.demo}>
       <div className={styles.demoHeader}>
-        <span className="label">Decision Pathway Sandbox</span>
+        <span className="label">Severity Framework · Sickle Cell Disease</span>
         <span className={`tag`}>Click a node to explore</span>
       </div>
 
@@ -125,14 +125,14 @@ export default function DecisionPathwayDemo({ project }: DecisionPathwayDemoProp
                 </div>
               </div>
               <div className={styles.infoGroup}>
-                <span className="label">Next step</span>
+                <span className="label">Connection to the framework</span>
                 <p className={styles.infoText}>{active.next}</p>
               </div>
             </div>
           ) : (
             <div className={styles.emptyInfo}>
               <PathwayIcon />
-              <p>Select a node to explore the decision logic, data features, and next steps.</p>
+              <p>Select a level to see how severity manifests — and how it is measured — at that point in the causal chain.</p>
             </div>
           )}
         </div>

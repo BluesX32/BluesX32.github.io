@@ -15,9 +15,9 @@ interface Criterion {
 
 const BASE_N = 8420
 const SEED_MAP: Record<string, number> = {
-  'I50.x': 3200, 'N18.3': 1850, 'E11.x': 4100,
-  'BNP > 400': 2100, 'Cr > 1.5': 1400, 'HbA1c > 7': 1900,
-  'Loop diuretics': 2800, 'SGLT2i': 420, 'Metformin': 1600,
+  'M33.0x': 1850, 'M32.x': 3200, 'M34.x': 980, 'H20.x': 2100,
+  'Hospitalized Infection': 2800, 'PJP': 420, 'PML': 180, 'VZV/Shingles': 1900,
+  'MMF': 2600, 'RTX': 1400, 'IVIG': 680, 'JAKi': 950,
 }
 
 function calcCohort(criteria: { icd: Criterion[]; labs: Criterion[]; meds: Criterion[] }) {
@@ -70,17 +70,17 @@ export default function CohortBuilderDemo({ project }: CohortBuilderDemoProps) {
         {/* Criteria panel */}
         <div className={styles.criteriaPanel}>
           <CriteriaGroup
-            title="ICD Codes"
+            title="Disease Indications"
             items={icd}
             onToggle={(i) => toggle(icd, setIcd, i)}
           />
           <CriteriaGroup
-            title="Labs"
+            title="Outcomes"
             items={labs}
             onToggle={(i) => toggle(labs, setLabs, i)}
           />
           <CriteriaGroup
-            title="Medications"
+            title="Drug Comparators"
             items={meds}
             onToggle={(i) => toggle(meds, setMeds, i)}
           />

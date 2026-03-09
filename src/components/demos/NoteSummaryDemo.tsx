@@ -20,9 +20,12 @@ const HIGHLIGHT_COLORS: Record<HighlightKey, string> = {
   plan:   styles.hlPlan,
 }
 
+type TabKey = 'current' | 'future'
+
 export default function NoteSummaryDemo({ project }: NoteSummaryDemoProps) {
   const reducedMotion = useReducedMotion()
   const [active, setActive] = useState(false)
+  const [tab, setTab] = useState<TabKey>('current')
   const [hoveredHighlight, setHoveredHighlight] = useState<HighlightKey | null>(null)
   const [modalOpen, setModalOpen] = useState(false)
   const modalRef = useRef<HTMLDivElement>(null)
@@ -36,9 +39,15 @@ export default function NoteSummaryDemo({ project }: NoteSummaryDemoProps) {
     }
   }, [active])
 
-  // Build highlighted note text
-  const noteText = project.demoNote ?? ''
-  const summary = project.demoSummary
+  const handleTabChange = (t: TabKey) => {
+    setTab(t)
+    setHoveredHighlight(null)
+  }
+
+  // Select note/summary based on active tab
+  const noteText = tab === 'future' ? (project.futureNote ?? '') : (project.demoNote ?? '')
+  const summary = tab === 'future' ? project.futureSummary : project.demoSummary
+  const hasFuture = !!project.futureNote
 
   const buildHighlightedNote = () => {
     if (!hoveredHighlight || !summary) return [noteText]
@@ -120,7 +129,28 @@ export default function NoteSummaryDemo({ project }: NoteSummaryDemoProps) {
     <>
       <div className={`${styles.demo} ${reducedMotion ? '' : styles.demoAnimated}`}>
         <div className={styles.demoHeader}>
-          <span className="label">Clinical Note Summarization Demo</span>
+          <span className="label">Dose Extraction Demo</span>
+          {hasFuture && (
+            <div className={styles.tabGroup} role="tablist" aria-label="Demo mode">
+              <button
+                role="tab"
+                aria-selected={tab === 'current'}
+                className={`${styles.tabBtn} ${tab === 'current' ? styles.tabBtnActive : ''}`}
+                onClick={() => handleTabChange('current')}
+              >
+                Sig Parsing
+              </button>
+              <button
+                role="tab"
+                aria-selected={tab === 'future'}
+                className={`${styles.tabBtn} ${tab === 'future' ? styles.tabBtnActive : ''} ${styles.tabBtnFuture}`}
+                onClick={() => handleTabChange('future')}
+              >
+                Clinical Notes
+                <span className={styles.futurePill}>Future</span>
+              </button>
+            </div>
+          )}
           <span className={`tag ${styles.syntheticTag}`}>Synthetic example</span>
           <button
             className={`btn btn-outline ${styles.expandBtn}`}
@@ -135,7 +165,7 @@ export default function NoteSummaryDemo({ project }: NoteSummaryDemoProps) {
           {/* Left: Clinical note */}
           <div className={styles.notePanel} aria-label="Clinical note">
             <div className={styles.panelHeader}>
-              <span className={styles.panelLabel}>Progress Note</span>
+              <span className={styles.panelLabel}>{tab === 'future' ? 'Progress Note (Narrative)' : 'Prescription Sig'}</span>
               <span className={styles.panelMeta}>Hover summary bullets to highlight spans</span>
             </div>
             <div className={styles.noteScroll}>

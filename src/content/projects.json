@@ -2,154 +2,181 @@
   {
     "id": "note-summarization",
     "title": "AgentDose: Steroid Dose Extraction from OMOP",
-    "subtitle": "NLP parsers + LLM agents for scalable medication extraction",
+    "subtitle": "Three-method framework: structured fields, NLP parser, and LLM agent",
     "status": "Active · OHDSI 2025 Nominee",
     "tags": ["Clinical NLP", "LLM Agents", "OMOP CDM", "Pharmacoepidemiology"],
-    "problem": "Corticosteroid exposure is a critical variable in pharmacoepidemiology and rheumatology research, but dosing information in EHR data is largely trapped in free-text prescription signatures — not in structured fields. This means most OMOP-based studies on steroid exposure are either impossible or rely on rough proxies that don't capture titration, tapering, or actual administered dose.",
-    "approach": "AgentDose combines rule-based NLP parsers with LLM agents to extract structured dosing information (drug, dose, frequency, duration, route) from prescription sig fields in OMOP CDM databases. The hybrid approach uses deterministic parsers for well-formed sigs and LLM agents for ambiguous or complex cases, with a validation layer comparing against manually adjudicated gold standards.",
-    "impact": "Nominated for Best Community Contribution Showcase at OHDSI Global Symposium 2025. The framework is being developed as an open-source R package to support reproducible steroid exposure calculation across distributed OHDSI partner databases, enabling multi-site pharmacoepidemiologic analyses that were previously infeasible.",
-    "myRole": "Led development of the extraction framework, designed and evaluated NLP parsers and LLM-based approaches, presented at OHDSI 2025. Developing the open-source R package for multi-site deployment.",
-    "tools": ["Python", "R", "spaCy", "LLM APIs", "OMOP CDM", "OHDSI ATLAS", "SQL"],
-    "pipeline": [
-      {"id": "p1", "label": "OMOP Drug Records", "description": "Source: OMOP CDM drug_exposure table, containing prescription records with sig (signature) free-text fields alongside structured fields."},
-      {"id": "p2", "label": "Rule-Based Parser", "description": "A deterministic NLP parser extracts dose, frequency, route, and duration from well-formed prescription signatures using regex patterns and clinical vocabulary."},
-      {"id": "p3", "label": "LLM Agent", "description": "For ambiguous, complex, or non-standard sigs, an LLM agent resolves extraction with structured prompting and constrained output schemas."},
-      {"id": "p4", "label": "Dose Normalization", "description": "Extracted values are normalized to standard units (mg/day equivalent) and mapped to OMOP drug concept IDs for cross-site comparability."},
-      {"id": "p5", "label": "Validated Exposure", "description": "Final structured steroid exposure records with daily dose estimates, adjudicated against gold-standard chart review for precision/recall evaluation."}
+    "problem": "Corticosteroid dose is one of the most clinically important yet systematically missing variables in EHR-based research. In OMOP CDM, structured dose fields (amount_value, quantity) are missing in 62.7% and 97.9% of corticosteroid records respectively. The remaining dosing information is encoded in free-text prescription signature (sig) fields — short standardized strings like 'Take 1 tablet (5mg) by mouth twice daily' — but extracting structured, comparable dose estimates from these fields at scale has not been solved in an OMOP-compatible way.",
+    "approach": "AgentDose implements three progressively richer extraction methods: (1) Baseline — uses only available structured OMOP fields (amount_value, quantity); (2) NLP Parser — combines structured fields with regex-based parsing of sig text to extract dose, frequency, route, and duration; (3) LLM Agent — uses Claude Opus 4 with structured prompting to handle all fields, including sigs that resist rule-based extraction. All methods output daily dose in prednisone-equivalent mg/day. Performance is evaluated against a manually adjudicated gold standard using MAE, MBE, and episode coverage.",
+    "impact": "The LLM Agent achieved MAE of 5.2 mg/day and MBE of 2.15 mg/day across 478 of 687 usable episodes (69.6% coverage) — compared to the NLP Parser (MAE 12.6, MBE 7.6, 83.5% coverage) and Baseline (MAE 23.5, MBE 21.8, 75% coverage on only 3 of 4 episodes). Nominated for Best Community Contribution Showcase at OHDSI Global Symposium 2025. Being developed as an open-source R package for reproducible steroid exposure calculation across distributed OHDSI networks. Future work will extend to free-text clinical notes in EHR systems.",
+    "myRole": "Led development of the full extraction framework — designed and implemented all three methods, built the evaluation pipeline, adjudicated gold-standard labels, and analyzed results. Presented at OHDSI Global Symposium 2025. Leading open-source R package development for multi-site deployment.",
+    "links": [
+      {"label": "SteroidDoseR on GitHub", "url": "https://github.com/BluesX32/SteroidDoseR", "icon": "github"}
     ],
-    "demoNote": "Patient is a 45-year-old female with dermatomyositis presenting for follow-up. Current immunosuppressant regimen includes prednisone 40mg daily with a plan to taper by 10mg every two weeks until reaching 10mg daily, then reassess. She is also on azathioprine 150mg daily, hydroxychloroquine 400mg daily, and omeprazole 20mg daily for GI prophylaxis. Recent creatine kinase was 320 (down from 1800 at diagnosis). Aldolase 8.5. She reports improved proximal muscle strength and decreased skin involvement over the past month. Plan: continue current prednisone taper as tolerated; recheck CK and aldolase in 4 weeks; consider reducing azathioprine if labs remain stable; patient counseled on bone protection with calcium and vitamin D supplementation while on prolonged steroid therapy.",
+    "tools": ["Python", "R", "Claude Opus 4 (LLM)", "OMOP CDM", "OHDSI ATLAS", "SQL", "Regex / NLP"],
+    "pipeline": [
+      {"id": "p1", "label": "Cohort Selection", "description": "Dermatomyositis patients identified from OMOP CDM using validated ICD-10 phenotyping algorithms. All corticosteroid prescriptions in the drug_exposure table are extracted for the target cohort."},
+      {"id": "p2", "label": "Data Extraction", "description": "For each prescription record: structured fields (drug concept, amount_value, quantity, days_supply) are pulled directly from OMOP; the sig free-text field ('Take 1 tablet (5mg) by mouth twice daily') is parsed separately by the NLP parser and LLM agent."},
+      {"id": "p3", "label": "Daily Dose Calculation", "description": "Three methods compute daily dose in mg/day: (1) Baseline uses structured fields only; (2) NLP Parser applies regex patterns to sig text; (3) LLM Agent uses Claude Opus 4 with structured prompting. All outputs are converted to prednisone-equivalent mg/day."},
+      {"id": "p4", "label": "Model Evaluation", "description": "Extracted doses compared to manually adjudicated gold standard. Metrics: Mean Absolute Error (MAE), Mean Bias Error (MBE), and episode coverage rate. LLM Agent: MAE 5.2, MBE 2.15, 478/687 episodes. NLP Parser: MAE 12.6, MBE 7.6, 96/115 episodes. Baseline: MAE 23.5, MBE 21.8, 3/4 episodes."}
+    ],
+    "demoNote": "Prednisone 10 MG Oral Tablet | Sig: Take 2 tablets (20mg total) by mouth every morning for 14 days, then take 1 tablet (10mg) daily thereafter. Dispense: 42 tablets. Refills: 0.",
     "demoSummary": {
       "problems": [
-        {"text": "Dermatomyositis — improving (CK 320, down from 1800 at diagnosis)", "spans": ["dermatomyositis", "creatine kinase was 320 (down from 1800 at diagnosis)"], "highlight": "hf"},
-        {"text": "Proximal muscle weakness — improved on current regimen", "spans": ["improved proximal muscle strength"], "highlight": "volume"},
-        {"text": "Skin involvement — decreasing", "spans": ["decreased skin involvement"], "highlight": "ckd"}
+        {"text": "Sig text detected — rule-based parser applied", "spans": ["Take 2 tablets (20mg total) by mouth every morning for 14 days"], "highlight": "hf"},
+        {"text": "Taper instruction detected — requires multi-phase parsing", "spans": ["then take 1 tablet (10mg) daily thereafter"], "highlight": "volume"}
       ],
       "medications": [
-        {"text": "Prednisone 40mg daily → taper 10mg q2wks → target 10mg daily", "spans": ["prednisone 40mg daily", "taper by 10mg every two weeks until reaching 10mg daily"], "highlight": "med"},
-        {"text": "Azathioprine 150mg daily", "spans": ["azathioprine 150mg daily"], "highlight": "med"},
-        {"text": "Hydroxychloroquine 400mg daily", "spans": ["hydroxychloroquine 400mg daily"], "highlight": "med"},
-        {"text": "Omeprazole 20mg daily (GI prophylaxis)", "spans": ["omeprazole 20mg daily for GI prophylaxis"], "highlight": "med"}
+        {"text": "Drug: Prednisone (OMOP concept 1551099)", "spans": ["Prednisone 10 MG Oral Tablet"], "highlight": "med"},
+        {"text": "Phase 1: 20 mg/day × 14 days (oral)", "spans": ["Take 2 tablets (20mg total) by mouth every morning for 14 days"], "highlight": "med"},
+        {"text": "Phase 2: 10 mg/day ongoing (oral)", "spans": ["take 1 tablet (10mg) daily thereafter"], "highlight": "med"}
       ],
       "assessment": [
-        {"text": "Clinical improvement — CK trending down, muscle strength recovering", "spans": ["creatine kinase was 320", "improved proximal muscle strength"], "highlight": "assess"},
-        {"text": "Aldolase 8.5 — within normal limits", "spans": ["Aldolase 8.5"], "highlight": "ckd"}
+        {"text": "NLP Parser: extracted Phase 1 dose correctly; taper missed → MAE elevated", "spans": ["Take 2 tablets (20mg total) by mouth every morning"], "highlight": "assess"},
+        {"text": "LLM Agent: both phases extracted; prednisone-equivalent computed per phase", "spans": ["then take 1 tablet (10mg) daily thereafter"], "highlight": "ckd"}
       ],
       "plan": [
-        {"text": "Continue prednisone taper as tolerated; recheck labs in 4 weeks", "spans": ["continue current prednisone taper", "recheck CK and aldolase in 4 weeks"], "highlight": "plan"},
-        {"text": "Consider reducing azathioprine if labs remain stable", "spans": ["consider reducing azathioprine if labs remain stable"], "highlight": "plan"},
-        {"text": "Counsel on bone protection: Ca + Vit D supplementation", "spans": ["calcium and vitamin D supplementation while on prolonged steroid therapy"], "highlight": "htn"}
+        {"text": "Output: avg daily dose = 15.2 mg/day prednisone-equivalent (episode-weighted)", "spans": ["20mg total", "10mg"], "highlight": "plan"},
+        {"text": "Dispense quantity (42 tablets) cross-validated against computed episode length (28 days × 1.5 avg tablets/day)", "spans": ["Dispense: 42 tablets"], "highlight": "htn"}
+      ]
+    },
+    "futureNote": "ASSESSMENT / PLAN — Rheumatology Follow-Up\n\nDermatomyositis: Continuing to improve. CK is down to 320 from 1,800 at diagnosis. She has been tolerating the current prednisone well. We will drop from 20mg to 15mg starting next week. If CK and aldolase remain stable at her four-week check, reduce to 10mg. Plan to taper by 5mg every four weeks thereafter, targeting 5mg daily as maintenance. Do not taper below 5mg without recheck.\n\nAzathioprine: Remains at 150mg daily. No cytopenia on recent CBC. Continue current dose; consider reducing to 100mg if CK normalizes over the next two months.\n\nHydroxychloroquine: 400mg daily, unchanged.\n\nGI prophylaxis: Omeprazole 20mg daily while on steroids. Discontinue when prednisone reaches 5mg daily.\n\nBone protection: Calcium 1000mg + Vitamin D 800IU daily. Repeat DEXA in 12 months.\n\nReturn in four weeks or sooner if new weakness, skin flare, or difficulty swallowing.",
+    "futureSummary": {
+      "problems": [
+        {"text": "Dermatomyositis — improving; CK 320 (from 1,800 at diagnosis)", "spans": ["CK is down to 320 from 1,800 at diagnosis"], "highlight": "hf"},
+        {"text": "Proximal weakness — resolving on current immunosuppression", "spans": ["Continuing to improve"], "highlight": "volume"}
+      ],
+      "medications": [
+        {"text": "Prednisone: 20mg → 15mg next week; taper to 10mg, then −5mg q4wks → 5mg maintenance", "spans": ["drop from 20mg to 15mg starting next week", "reduce to 10mg", "taper by 5mg every four weeks thereafter, targeting 5mg daily as maintenance"], "highlight": "med"},
+        {"text": "Azathioprine 150mg daily (consider ↓ to 100mg if CK normalizes)", "spans": ["Azathioprine: Remains at 150mg daily", "consider reducing to 100mg if CK normalizes"], "highlight": "med"},
+        {"text": "Hydroxychloroquine 400mg daily, unchanged", "spans": ["Hydroxychloroquine: 400mg daily, unchanged"], "highlight": "med"},
+        {"text": "Omeprazole 20mg daily (GI prophylaxis while on steroids)", "spans": ["Omeprazole 20mg daily while on steroids"], "highlight": "assess"}
+      ],
+      "assessment": [
+        {"text": "Prednisone taper schedule spans 3 phases; dose-days must be summed across phases", "spans": ["drop from 20mg to 15mg", "reduce to 10mg", "taper by 5mg every four weeks"], "highlight": "assess"},
+        {"text": "Azathioprine dose contingent on future labs — conditional extraction required", "spans": ["consider reducing to 100mg if CK normalizes over the next two months"], "highlight": "ckd"}
+      ],
+      "plan": [
+        {"text": "Follow-up in 4 weeks; repeat CK + aldolase before next taper step", "spans": ["four-week check"], "highlight": "plan"},
+        {"text": "DEXA repeat in 12 months; Ca + Vit D for bone protection", "spans": ["Calcium 1000mg + Vitamin D 800IU daily", "Repeat DEXA in 12 months"], "highlight": "htn"},
+        {"text": "Omeprazole to discontinue when prednisone reaches 5mg daily", "spans": ["Discontinue when prednisone reaches 5mg daily"], "highlight": "plan"}
       ]
     }
   },
   {
     "id": "decision-pathway",
     "title": "Disease Severity Framework",
-    "subtitle": "Conceptual and computational framework for representing severity",
+    "subtitle": "A multilevel, multidimensional conceptual framework for representing disease severity",
     "status": "MS Thesis · In Progress",
     "tags": ["Disease Severity", "Conceptual Modeling", "Clinical Informatics", "Scoping Review"],
-    "problem": "Disease severity is a central concept in clinical medicine — it drives treatment intensity, prognosis, escalation decisions, and resource allocation. Yet there is no unified conceptual or computational framework for representing severity. Existing severity scores (APACHE-II, SOFA, Child-Pugh) are domain-specific predictive instruments that have been reified into measures of disease state, often encoding hidden assumptions about what severity means.",
-    "approach": "My thesis has two components: (1) a PRISMA-ScR scoping review synthesizing definitions and conceptualizations of disease severity across clinical domains, and (2) a unified conceptual framework representing severity as multilevel and multidimensional — capturing objective markers, functional impact, temporal trajectory, and patient context. The framework is being formalized as a temporal state-transition model to support computational implementation.",
-    "impact": "A manuscript on the conceptual framework is in preparation for Journal of Biomedical Informatics. The framework will serve as the conceptual foundation for computational severity representations that can support clinical decision support, risk stratification, and phenotyping research. It also informs an open-source systematic review platform being developed alongside the thesis.",
+    "problem": "Disease severity is a central concept in clinical medicine — it drives treatment intensity, prognosis, escalation decisions, and resource allocation. Yet there is no unified conceptual or computational framework for representing it. Existing severity scores (APACHE-II, SOFA, Child-Pugh) are domain-specific predictive instruments that were designed to predict outcomes — mortality, ICU resource use, transplant priority — and have been reified over time into measures of disease state itself. That shift from predictive instrument to disease representation has consequences: we end up optimizing for the score, not the underlying state it was meant to capture.",
+    "approach": "The framework I am developing has two axes. The first is multilevel: severity is not a single observation but a causal chain — from the genetic or molecular cause of disease, through cellular and systemic pathophysiological effects, through observable clinical events and their consequences, down to how the patient actually lives with the disease. The second axis is multidimensional: at every level, severity can be observed objectively (labs, vitals, imaging), subjectively (what the patient reports about pain, function, fatigue), and societally (how the disease disrupts work, relationships, and access to care). The thesis combines a PRISMA-ScR scoping review synthesizing how severity is defined across clinical domains with a formal conceptual framework that makes these axes explicit and computationally tractable.",
+    "impact": "A manuscript is in preparation. The framework is intended to serve as conceptual groundwork for severity phenotyping research, risk stratification systems, and clinical decision support tools that go beyond single-number scores. The interactive diagram below illustrates the multilevel causal chain using sickle cell disease as a worked example — click any node to see how each level is characterized across the three dimensions.",
     "myRole": "Primary investigator: scoping review design, literature screening, conceptual framework development, manuscript writing. PI: Dr. Harold P. Lehmann, Johns Hopkins School of Medicine.",
-    "tools": ["PRISMA-ScR methodology", "OHDSI ontologies", "Python", "Overleaf", "Covidence", "Evidence Synthesis Platform"],
+    "links": [
+      {"label": "EvidencePlatform on GitHub", "url": "https://github.com/BluesX32/EvidencePlatform", "icon": "github"}
+    ],
+    "tools": ["PRISMA-ScR methodology", "Ontologies", "Covidence", "Evidence Synthesis Platform"],
     "pipeline": [
-      {"id": "d1", "label": "Scoping Review", "description": "PRISMA-ScR protocol across PubMed, EMBASE, and clinical informatics literature — synthesizing how severity is defined, operationalized, and measured across cardiology, oncology, neurology, and other domains."},
-      {"id": "d2", "label": "Conceptual Analysis", "description": "Extraction and coding of severity dimensions: biomarkers, functional status, disease trajectory, patient context, and clinical judgment. Identifying commonalities and domain-specific variation."},
-      {"id": "d3", "label": "Framework Design", "description": "Developing a multilevel, multidimensional conceptual framework — representing severity as a composite construct that integrates objective, functional, temporal, and contextual dimensions."},
-      {"id": "d4", "label": "Formalization", "description": "Translating the conceptual framework into a temporal state-transition model using ontology-informed structures for computational representation."},
-      {"id": "d5", "label": "Validation", "description": "Validating framework coverage against clinical vignettes and existing severity scores; identifying gaps in current operationalizations."}
+      {"id": "d1", "label": "Scoping Review", "description": "PRISMA-ScR protocol across PubMed, EMBASE, and clinical informatics literature — synthesizing how severity is defined, operationalized, and measured across cardiology, oncology, neurology, hematology, and other domains. Coding for level (cause through experience) and dimension (objective, subjective, societal)."},
+      {"id": "d2", "label": "Framework Design", "description": "Developing the multilevel axis (@Cause → @Intermediate → @Journey → @Outcome → @PatientExperience) and the multidimensional axis (Objective / Subjective / Societal), synthesized from scoping review findings and tested against clinical vignettes including sickle cell disease, heart failure, and COPD."},
+      {"id": "d3", "label": "Formalization", "description": "Translating the conceptual framework into a temporal state-transition model: severity as a moving location in a multilevel × multidimensional space, with transitions governed by disease progression, treatment response, and contextual factors."},
+      {"id": "d4", "label": "Validation", "description": "Validating framework coverage against existing severity scores (SOFA, APACHE-II, Child-Pugh, NYHA, ECOG) and clinical vignettes, identifying which levels and dimensions each score captures — and which it systematically omits."},
+      {"id": "d5", "label": "Manuscript", "description": "Manuscript in preparation for Journal of Biomedical Informatics. The framework will be released alongside an open-source evidence synthesis platform developed in parallel with the thesis."}
     ],
     "decisionNodes": [
       {
-        "id": "n1", "label": "Biomarker Level",
+        "id": "n1", "label": "Molecular Cause",
         "x": 60, "y": 120,
-        "rationale": "The most common dimension: objective physiological or laboratory markers that deviate from normal. Examples: troponin in ACS, creatinine in CKD, CD4 count in HIV. Often the most measurable but not sufficient to capture severity.",
-        "features": ["Lab values", "Vital signs", "Imaging findings", "Biomarkers"],
-        "next": "Feeds into functional impairment assessment — how biomarker deviation translates to lived impact."
+        "rationale": "Severity begins at the causal root: the genetic variant, pathogen, or exposure that initiates disease. In sickle cell disease (SCD), a single point mutation — Glu→Val in the β-globin gene — produces HbS. Genotype (HbSS vs. HbSC vs. HbSβ⁺-thalassemia) and modifiers like HbF percentage and alpha-thalassemia co-inheritance determine the baseline severity ceiling. Two patients with 'sickle cell disease' can have vastly different severity trajectories based on these molecular differences alone.",
+        "features": ["HbSS / HbSC / HbSβ genotype", "HbF percentage", "Alpha-thal co-inheritance", "Objective dimension"],
+        "next": "The molecular cause propagates severity through two parallel pathophysiological pathways: one primarily cellular (sickling, hemolysis), one primarily systemic (endothelial damage, coagulation, inflammation)."
       },
       {
-        "id": "n2", "label": "Functional Impact",
+        "id": "n2", "label": "Cellular Effects",
         "x": 200, "y": 60,
-        "rationale": "How the disease limits what a patient can do. NYHA class for heart failure, ECOG status for cancer, ADL/IADL for frailty. Captures severity as experienced by the patient, not just measured by clinicians.",
-        "features": ["NYHA / ECOG", "ADL / IADL", "Patient-reported outcomes", "Activity limitation"],
-        "next": "Both biomarker level and functional impact are shaped by disease trajectory over time."
+        "rationale": "At the subcellular and cellular level, HbS polymerizes under hypoxia, deforming red cells into the sickle shape. This drives hemolysis: red cells lyse, releasing hemoglobin into plasma where it scavenges nitric oxide and generates reactive oxygen species. Objective markers of hemolysis — LDH, indirect bilirubin, reticulocyte count — capture severity at this level. These are measurable, but they don't tell you whether the patient is having a crisis today.",
+        "features": ["LDH (hemolysis marker)", "Indirect bilirubin", "Reticulocyte count", "HbS / HbF %", "Objective dimension"],
+        "next": "Cellular hemolysis is one input into systemic disease. The other pathway — vaso-occlusion and endothelial injury — operates in parallel and drives a different set of clinical consequences."
       },
       {
-        "id": "n3", "label": "Temporal Trajectory",
+        "id": "n3", "label": "Systemic Effects",
         "x": 200, "y": 180,
-        "rationale": "Whether the disease is stable, progressing, or remitting changes the clinical meaning of any snapshot. A creatinine of 2.1 means very different things if it rose from 1.8 last week versus has been stable for 3 years.",
-        "features": ["Rate of change", "Disease stage", "Flare / remission patterns", "Time since diagnosis"],
-        "next": "Trajectory interacts with patient context to determine clinical urgency and treatment response."
+        "rationale": "Sickled cells are rigid and adhesive. They obstruct microvasculature, trigger endothelial activation, coagulation, and inflammation — driving the systemic pathophysiology that underlies most SCD complications. Tricuspid regurgitation velocity (TRV) measures pulmonary hypertension from chronic hemolysis. WBC count reflects inflammatory activation. This level is also where objective severity most clearly begins to diverge from patient experience: lab values can look stable while the patient is in significant pain.",
+        "features": ["TRV (pulmonary HTN)", "WBC / CRP (inflammation)", "Serum creatinine (renal)", "Coagulation markers", "Objective dimension"],
+        "next": "Both cellular and systemic pathophysiology converge into observable disease events — the crises, hospitalizations, and end-organ damage that mark the clinical trajectory."
       },
       {
-        "id": "n4", "label": "Patient Context",
+        "id": "n4", "label": "Events & Outcomes",
         "x": 340, "y": 120,
-        "rationale": "Comorbidities, age, frailty, and social context modulate how a given biomarker or functional state maps onto severity for a specific patient. The same SOFA score carries different weight in a 30-year-old vs. an 80-year-old with multiple organ dysfunction.",
-        "features": ["Comorbidity burden", "Age / frailty", "Social determinants", "Treatment history"],
-        "next": "Integrating all dimensions yields a severity representation that supports clinical decision-making."
+        "rationale": "Disease events are where severity becomes clinically legible. In SCD: vaso-occlusive crises (VOC), acute chest syndrome (ACS), stroke, splenic sequestration, avascular necrosis, nephropathy, retinopathy. Severity at this level has both an objective face (GFR, 6-minute walk test, echocardiography) and a trajectory face: a patient with two ACS episodes this year is at a different point in their severity arc than one who had their first episode five years ago. VOC frequency and prior ACS are among the strongest predictors of future severity.",
+        "features": ["VOC frequency / year", "ACS episodes", "Stroke history", "GFR (nephropathy)", "6-min walk test", "Objective + Subjective"],
+        "next": "Events and outcomes are the level most captured by existing severity scores — but they miss the molecular cause, the pathophysiology, and crucially, the patient experience."
       },
       {
-        "id": "n5", "label": "Composite Severity",
+        "id": "n5", "label": "Patient Experience",
         "x": 480, "y": 120,
-        "rationale": "No single dimension captures severity fully. The framework integrates biomarker, functional, trajectory, and context dimensions into a composite representation that can support risk stratification, treatment intensity decisions, and phenotyping research.",
-        "features": ["Multidimensional synthesis", "Clinical utility", "Computational operationalization"],
-        "next": "Enables downstream applications: CDS, phenotyping, comparative effectiveness, prognostic modeling."
+        "rationale": "The final level — and the one most systematically excluded from clinical severity scoring — is how patients actually live with the disease. In SCD, this means chronic pain that is rarely fully captured by hospitalization counts (most crises are managed at home), fatigue, opioid dependency risk, school and work absence, and the psychosocial burden of a stigmatized, undertreated disease. The ASCQ-Me (Adult Sickle Cell Quality of Life Measurement) captures SCD-specific PROs. The societal dimension adds SDoH: access to care, housing stability, insurance. A severity score that ignores this level is measuring the disease, not the patient.",
+        "features": ["ASCQ-Me (SCD PRO)", "PROMIS Pain Interference", "School / work absence", "SDoH barriers", "Subjective + Societal"]        ,
+        "next": "A complete severity representation integrates all five levels — cause, cellular effects, systemic effects, clinical events, and patient experience — across objective, subjective, and societal dimensions. No existing single score does this."
       }
     ]
   },
   {
     "id": "cohort-builder",
-    "title": "OHDSI Network Study: Dermatomyositis Phenotyping",
-    "subtitle": "Computable phenotypes and multi-site comparative effectiveness in OMOP",
+    "title": "Infectious Safety of Immunosuppressants in Rheumatic Disease",
+    "subtitle": "Comparative risk of serious infection across immunosuppressive regimens using OMOP CDM",
     "status": "Active · Myositis Center, Johns Hopkins Rheumatology",
-    "tags": ["OMOP CDM", "OHDSI", "Phenotyping", "Comparative Effectiveness"],
-    "problem": "Dermatomyositis is a rare inflammatory myopathy with significant treatment variability and poorly characterized adverse event profiles. Because it is rare, single-site studies are underpowered. Multi-site studies using heterogeneous data systems are complex to coordinate. OHDSI's federated network approach offers a path to the scale needed — but only if phenotyping algorithms are carefully validated across sites.",
-    "approach": "I developed computable phenotypes and cohort discovery pipelines for dermatomyositis across multi-institution OMOP CDM databases using OHDSI ATLAS, contributing to a distributed network study evaluating immunosuppressant therapies and medication-related adverse events. I'm also developing an R package to support distributed cohort evaluation and meta-analysis across OHDSI partner databases.",
-    "impact": "The phenotyping approach enables a properly powered multi-site comparative effectiveness analysis that would be impossible at any single institution. The R package, once released, will support reproducible distributed cohort evaluation for rare disease research across the OHDSI community.",
-    "myRole": "Developed computable phenotypes, contributed to study design and comparative effectiveness analysis. Leading R package development for distributed cohort evaluation. PI: Dr. Christopher A. Mecoli, Johns Hopkins Rheumatology.",
-    "tools": ["R", "OHDSI ATLAS", "OMOP CDM", "SQL", "FeatureExtraction", "CohortDiagnostics"],
+    "tags": ["OMOP CDM", "OHDSI", "Pharmacoepidemiology", "Infectious Safety", "Network Study"],
+    "problem": "Patients with rare rheumatic diseases — dermatomyositis, systemic lupus, systemic sclerosis, uveitis — require long-term immunosuppression, but treatment carries meaningful risk of serious and opportunistic infections including PML, PJP, and VZV. Because these diseases are rare, single-site studies are severely underpowered to characterize comparative infectious risk across agents. Current prophylaxis practices are driven largely by expert opinion rather than real-world comparative evidence.",
+    "approach": "Using the OHDSI federated network across 6+ academic medical centers, I contribute to a distributed pharmacoepidemiologic study applying new-user, active-comparator design. Aim 1 evaluates monotherapy comparisons (mycophenolate, rituximab, IVIG, JAK inhibitors); Aim 2 evaluates combination immunosuppression regimens. Propensity score-adjusted Cox proportional hazards models and self-controlled case series (SCCS) provide complementary causal estimates. Analysis packages are deployed using HADES/Strategus so only aggregate results leave each site.",
+    "impact": "Produces the first multi-site comparative estimates of serious infection risk — including rare opportunistic infections — across major immunosuppressive regimens used in rheumatic diseases. Results across 6+ sites will directly inform prophylaxis guidelines and shared decision-making for clinicians managing these patients.",
+    "myRole": "Contributed to disease cohort phenotyping, study design, and comparative effectiveness analysis framework. PI: Dr. Christopher A. Mecoli, Johns Hopkins Rheumatology.",
+    "tools": ["R", "OHDSI ATLAS", "OMOP CDM", "HADES/Strategus", "CohortMethod", "CohortDiagnostics", "SQL"],
     "pipeline": [
-      {"id": "c1", "label": "OMOP CDM Data", "description": "Source: multi-institution OMOP CDM databases with condition, drug, measurement, and observation domains standardized to OMOP vocabulary."},
-      {"id": "c2", "label": "ICD Phenotyping", "description": "Initial cohort defined using ICD-10 codes for dermatomyositis and related inflammatory myopathy diagnoses, filtered by code frequency and setting requirements."},
-      {"id": "c3", "label": "Cohort Diagnostics", "description": "OHDSI CohortDiagnostics evaluates phenotype performance across sites: prevalence, incidence, attrition, and concept set coverage before any analysis begins."},
-      {"id": "c4", "label": "Exposure Definition", "description": "Immunosuppressant exposure cohorts defined using OMOP drug concept hierarchies: corticosteroids, azathioprine, mycophenolate, rituximab, IVIG."},
-      {"id": "c5", "label": "Distributed Analysis", "description": "Analysis package runs locally at each site; only aggregate results are shared. Meta-analysis synthesizes site-level estimates into network-wide comparative effectiveness results."}
+      {"id": "c1", "label": "Disease Phenotyping", "description": "Computable phenotypes defined for target rheumatic diseases (DM, SLE, SSc, uveitis) using ICD-10 concept sets, validated with CohortDiagnostics across all participating sites before analysis begins."},
+      {"id": "c2", "label": "Drug Exposure Cohorts", "description": "New-user cohorts defined at first prescription of each comparator drug (MMF, RTX, IVIG, JAKi). Active-comparator design ensures exchangeability assumptions hold at cohort entry."},
+      {"id": "c3", "label": "PS Derivation", "description": "Large-scale propensity scores estimated from hundreds of baseline covariates using regularized logistic regression (LASSO). Preference score distributions assessed for equipoise across sites."},
+      {"id": "c4", "label": "Outcome Ascertainment", "description": "Primary outcomes: hospitalized infection, PJP, PML, VZV/Shingles. Each ascertained via validated OMOP concept sets. Both Cox PH and SCCS designs applied to test consistency of estimates."},
+      {"id": "c5", "label": "Distributed Analysis", "description": "Strategus coordinates execution: analysis packages run locally at each site, sharing only aggregate hazard ratio estimates. Meta-analysis combines site-level results into network-wide comparative safety estimates."}
     ],
     "cohortCriteria": {
       "icd": [
         {"code": "M33.0x", "label": "Dermatomyositis", "active": true},
-        {"code": "M33.1x", "label": "Other Dermatomyositis", "active": true},
-        {"code": "M33.9x", "label": "Dermatomyositis, unspec.", "active": false}
+        {"code": "M32.x", "label": "Systemic Lupus", "active": false},
+        {"code": "M34.x", "label": "Systemic Sclerosis", "active": false},
+        {"code": "H20.x", "label": "Uveitis", "active": false}
       ],
       "labs": [
-        {"name": "CK > 3× ULN", "label": "Elevated Creatine Kinase", "active": true},
-        {"name": "Aldolase > ULN", "label": "Elevated Aldolase", "active": false},
-        {"name": "ANA positive", "label": "Positive ANA", "active": false}
+        {"name": "Hospitalized Infection", "label": "Hospitalized Infection", "active": true},
+        {"name": "PJP", "label": "Pneumocystis (PJP)", "active": false},
+        {"name": "PML", "label": "Prog. Multifocal Leukoencephalopathy", "active": false},
+        {"name": "VZV/Shingles", "label": "VZV / Shingles", "active": false}
       ],
       "meds": [
-        {"name": "Prednisone", "label": "Corticosteroids", "active": true},
-        {"name": "Azathioprine", "label": "Azathioprine", "active": false},
-        {"name": "Mycophenolate", "label": "Mycophenolate", "active": false}
+        {"name": "MMF", "label": "Mycophenolate (MMF)", "active": true},
+        {"name": "RTX", "label": "Rituximab (RTX)", "active": false},
+        {"name": "IVIG", "label": "IVIG", "active": false},
+        {"name": "JAKi", "label": "JAK Inhibitors", "active": false}
       ]
     }
   },
   {
     "id": "tradeoff-explorer",
-    "title": "Racial Disparities in Post-Surgical ED Utilization",
-    "subtitle": "Multi-state retrospective cohort study using HCUP data",
-    "status": "Published (In Press) · Int J Gynaecol Obstet",
-    "tags": ["Health Equity", "Administrative Claims", "HCUP", "Logistic Regression"],
-    "problem": "Racial disparities in surgical outcomes and post-operative healthcare utilization are well-documented in aggregate, but the mechanisms and modifiable factors are less understood. Emergency department visits within 30 days of hysterectomy represent a measurable, clinically meaningful outcome that reflects both quality of care and access to follow-up.",
-    "approach": "Processed multi-state HCUP databases covering over 48 million inpatient and outpatient records. Designed cohort selection and filtering pipelines to identify approximately 200,000 hysterectomy cases. Built multivariable logistic regression and sensitivity analysis workflows in R to evaluate predictors of 30-day ED utilization, with race/ethnicity as the primary exposure and a broad set of clinical and demographic covariates.",
-    "impact": "First-author, corresponding author publication in International Journal of Gynaecology and Obstetrics (in-press). Results characterize systematic racial disparities in post-hysterectomy ED utilization and identify clinical factors that partially mediate and partially moderate these disparities, with implications for targeted quality improvement interventions.",
-    "myRole": "First and corresponding author. Designed cohort selection pipeline, built all analytical workflows in R, generated all statistical outputs, wrote the manuscript.",
-    "tools": ["R", "HCUP (Healthcare Cost and Utilization Project)", "Multivariable logistic regression", "Sensitivity analysis", "SQL Server"],
+    "title": "Racial Disparities in Post-Hysterectomy ED Utilization",
+    "subtitle": "State-based retrospective cohort study using HCUP data · Florida & Maryland 2017–2021",
+    "status": "In Press · Int J Gynecol Obstet, 2026",
+    "tags": ["Health Equity", "Administrative Claims", "HCUP", "Disparities Research"],
+    "problem": "Racial disparities in post-surgical outcomes are well-documented, but less is known about unplanned healthcare utilization — particularly emergency department visits within 30 days of discharge. Hysterectomy is one of the most common surgical procedures in the US (400,000+ per year), with Black women undergoing it at 3.5× the rate of White women. Understanding what drives post-operative ED utilization, and whether disparities persist after adjusting for clinical and socioeconomic factors, is essential to targeting quality improvement interventions.",
+    "approach": "Retrospective cohort study using HCUP State Inpatient (SID), State Ambulatory (SASD), and State Emergency Department (SEDD) databases for Florida and Maryland, 2017–2021 — covering 48M+ encounters. I identified 193,432 hysterectomy cases via ICD-10-PCS and CPT procedure codes, then linked to subsequent ED encounters within 30 days. Multivariable logistic regression estimated adjusted ORs for 30-day ED visits, with race/ethnicity as the primary exposure. Interaction terms assessed effect modification by state, surgery route, and setting. A race × state interaction model examined geographic heterogeneity. Secondary outcome: total hospital charges modeled via generalized linear model (Gamma distribution). STROBE reporting guidelines followed.",
+    "impact": "Accepted and in press at International Journal of Gynecology & Obstetrics (2026). Among 193,432 hysterectomy patients, 11.3% had 30-day ED visits. Black patients had significantly higher odds (OR 1.16, 95% CI 1.12–1.20) after full adjustment; the disparity was attenuated in Maryland vs. Florida (interaction OR 0.90, p=0.011). Medicaid patients had more than twice the odds of private insurance (OR 2.09). Maryland's all-payer TCOC model was associated with lower costs and ED utilization. Findings highlight modifiable structural factors — access to follow-up care, insurance type, state-level policy — as targets for equity interventions.",
+    "myRole": "First and corresponding author. Designed the cohort selection and linkage pipeline, conducted all statistical analyses in R, generated all results, drafted and revised the manuscript. Co-authors: Yiheng Wang, Chen Dun, Mostafa A. Borahay, Hadi Kharrazi (PI). Division of Biomedical Informatics and Data Science, Johns Hopkins.",
+    "tools": ["R 4.2", "HCUP (SID / SASD / SEDD)", "Multivariable logistic regression", "Generalized linear model (Gamma)", "ICD-10-PCS / CPT coding"],
     "pipeline": [
-      {"id": "t1", "label": "HCUP Databases", "description": "Multi-state HCUP inpatient and outpatient databases — 48M+ records. Covers procedures, diagnoses, demographics, and payer information at the encounter level."},
-      {"id": "t2", "label": "Cohort Selection", "description": "Hysterectomy cases identified by procedure codes (ICD-10-PCS / CPT). Exclusions applied for age, comorbidity extremes, and incomplete follow-up windows. Final cohort: ~200,000 cases."},
-      {"id": "t3", "label": "Outcome Ascertainment", "description": "30-day ED visits identified by linking index hospitalization to subsequent ED encounters within the same state database, using probabilistic and deterministic linkage strategies."},
-      {"id": "t4", "label": "Statistical Modeling", "description": "Multivariable logistic regression adjusting for age, insurance, comorbidities, hospital characteristics, procedure type, and state. Sensitivity analyses test alternative cohort definitions."},
-      {"id": "t5", "label": "Disparity Analysis", "description": "Racial/ethnic differences in ED utilization estimated as adjusted odds ratios. Mediation and interaction analyses evaluate contributions of modifiable vs. structural factors."}
+      {"id": "t1", "label": "HCUP Databases", "description": "Florida and Maryland HCUP SID, SASD, and SEDD databases (2017–2021) — 48M+ inpatient, outpatient, and ED encounters. Patient-level procedure, diagnosis, demographic, and payer data standardized across states."},
+      {"id": "t2", "label": "Cohort Selection", "description": "Hysterectomy cases identified by ICD-10-PCS (inpatient) and CPT codes (outpatient). Radical hysterectomy excluded. Data quality filters applied for valid patient identifiers and complete follow-up windows. Final cohort: 193,432 patients."},
+      {"id": "t3", "label": "Outcome Ascertainment", "description": "Primary outcome: 30-day ED visit due to post-hysterectomy complications. ED encounters linked to index hospitalization within the same state database. Secondary outcome: total hospital charges, modeled with GLM Gamma distribution."},
+      {"id": "t4", "label": "Regression Modeling", "description": "Multivariable logistic regression with race/ethnicity as primary exposure, adjusting for age, CCI, surgery setting/route/indication, primary payer, hospital state, and median household income quartile. Interaction terms: race × state, race × surgery setting, and surgery route × setting."},
+      {"id": "t5", "label": "Disparity Analysis", "description": "Adjusted ORs reported with 95% CIs. Race × state interaction model (Table 3) estimated geographic heterogeneity in racial disparities. Sensitivity analysis substituted Area Deprivation Index for household income quartile — results were consistent."}
     ]
   }
 ]

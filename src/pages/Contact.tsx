@@ -80,9 +80,7 @@ export default function Contact() {
                 {social.scholar && (
                   <SocialLink href={social.scholar} icon={<ScholarIcon />} label="Google Scholar" sublabel="Publications" />
                 )}
-                {social.twitter && (
-                  <SocialLink href={social.twitter} icon={<TwitterIcon />} label="Twitter / X" sublabel={siteData.name} />
-                )}
+
               </div>
             </div>
 
@@ -134,9 +132,7 @@ function LinkedInIcon() {
 function ScholarIcon() {
   return <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
 }
-function TwitterIcon() {
-  return <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-}
+
 function CalendarIcon() {
   return <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" opacity="0.3"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
 }

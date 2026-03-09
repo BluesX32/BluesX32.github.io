@@ -52,8 +52,11 @@ export interface Project {
   myRole: string
   tools: string[]
   pipeline: PipelineNode[]
+  links?: { label: string; url: string; icon?: string }[]
   demoNote?: string
   demoSummary?: DemoSummary
+  futureNote?: string
+  futureSummary?: DemoSummary
   decisionNodes?: DecisionNode[]
   cohortCriteria?: CohortCriteria
 }
