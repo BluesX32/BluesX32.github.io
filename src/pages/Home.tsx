@@ -51,8 +51,12 @@ export default function Home() {
             </div>
           </div>
 
-          <div className={styles.heroVisual} aria-hidden="true">
-            <HeroSVG />
+          <div className={styles.heroVisual}>
+            <img
+              src="/WhiteCoating.JPG"
+              alt="Christelle Xiong at Johns Hopkins School of Medicine white coat ceremony"
+              className={styles.heroPhoto}
+            />
           </div>
         </div>
       </section>
@@ -139,57 +143,7 @@ function SectionCard({ to, label, title, description, icon, featured }: SectionC
   )
 }
 
-// ----- SVGs -----
-
-function HeroSVG() {
-  return (
-    <svg viewBox="0 0 480 480" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.heroSvg}>
-      {/* Outer rings */}
-      <circle cx="240" cy="240" r="200" stroke="currentColor" strokeWidth="0.75" opacity="0.12"/>
-      <circle cx="240" cy="240" r="150" stroke="currentColor" strokeWidth="0.75" opacity="0.10"/>
-      <circle cx="240" cy="240" r="100" stroke="currentColor" strokeWidth="1" opacity="0.12"/>
-
-      {/* Axis lines */}
-      <line x1="40" y1="240" x2="440" y2="240" stroke="currentColor" strokeWidth="0.5" opacity="0.08"/>
-      <line x1="240" y1="40" x2="240" y2="440" stroke="currentColor" strokeWidth="0.5" opacity="0.08"/>
-      <line x1="98" y1="98" x2="382" y2="382" stroke="currentColor" strokeWidth="0.5" opacity="0.06"/>
-      <line x1="382" y1="98" x2="98" y2="382" stroke="currentColor" strokeWidth="0.5" opacity="0.06"/>
-
-      {/* Signal / ECG motif */}
-      <polyline
-        points="40,260 80,260 100,220 120,300 140,180 160,320 180,240 220,240 240,200 260,240 300,240 320,260 340,260 380,260 400,260 440,260"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        fill="none"
-        opacity="0.3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-
-      {/* Nodes */}
-      <circle cx="140" cy="180" r="4" fill="currentColor" opacity="0.4"/>
-      <circle cx="240" cy="200" r="5" fill="currentColor" opacity="0.6"/>
-      <circle cx="340" cy="260" r="4" fill="currentColor" opacity="0.4"/>
-
-      {/* Center mark */}
-      <circle cx="240" cy="240" r="8" fill="currentColor" opacity="0.15"/>
-      <circle cx="240" cy="240" r="3" fill="currentColor" opacity="0.5"/>
-
-      {/* Connecting lines (network) */}
-      <line x1="140" y1="180" x2="240" y2="200" stroke="currentColor" strokeWidth="0.75" opacity="0.15"/>
-      <line x1="240" y1="200" x2="340" y2="260" stroke="currentColor" strokeWidth="0.75" opacity="0.15"/>
-      <line x1="140" y1="180" x2="340" y2="260" stroke="currentColor" strokeWidth="0.5" opacity="0.08"/>
-
-      {/* Small data points */}
-      {[
-        [160, 310], [310, 170], [190, 140], [330, 330],
-        [110, 290], [360, 190], [270, 360],
-      ].map(([x, y], i) => (
-        <circle key={i} cx={x} cy={y} r="2.5" fill="currentColor" opacity="0.2"/>
-      ))}
-    </svg>
-  )
-}
+// ----- Icons -----
 
 function DocumentIcon() {
   return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>

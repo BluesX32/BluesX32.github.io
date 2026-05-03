@@ -19,7 +19,7 @@
   margin-inline: auto;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 420px;
+  grid-template-columns: 1fr 320px;
   gap: var(--space-16);
   align-items: center;
 }
@@ -67,19 +67,21 @@
   flex-wrap: wrap;
 }
 
-/* Hero SVG */
+/* Hero photo */
 .heroVisual {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--accent-primary);
-  opacity: 0.85;
 }
 
-.heroSvg {
+.heroPhoto {
   width: 100%;
-  max-width: 420px;
+  max-width: 320px;
   height: auto;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  object-fit: cover;
+  display: block;
 }
 
 /* =========================================================
@@ -272,7 +274,7 @@
     gap: var(--space-10);
   }
   .heroVisual { order: -1; }
-  .heroSvg { max-width: 280px; margin-inline: auto; }
+  .heroPhoto { max-width: 240px; margin-inline: auto; }
 }
 
 @media (max-width: 760px) {
